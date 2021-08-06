@@ -2,17 +2,17 @@
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-8 h-80-vh border rounded-3 bg-light">
 
-            <!-- <div class='position-relative my-3'>
-                <h4 class="text-center text-success  position-absolute  start-50 translate-middle-x">
-                    Dear user, enjoy unlimited files from all over the world
-                </h4>
-                <button class="position-absolute end-0 mx-3 py-1 btn btn-outline-success">log out</button>
-            </div> -->
+<!--            <div class='d-flex justify-content-between mx-5 my-3'>-->
+<!--                <h4 class="text-center text-success ">-->
+<!--                    Dear user, enjoy unlimited files from all over the world-->
+<!--                </h4>-->
+<!--                <button class="py-1 btn btn-outline-success">log out</button>-->
+<!--            </div>-->
 
             <div class='my-3 d-flex justify-content-center'>
                 <div class='d-flex w-50'>
-                    <a href="#" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>
-                    <a href="#" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>
+                    <a href="/signIn" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>
+                    <a href="/signUp" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>
                 </div>
             </div>
 
