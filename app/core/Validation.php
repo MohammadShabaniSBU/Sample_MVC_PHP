@@ -33,44 +33,79 @@ class Validation {
             }
 
             foreach ($conditions as $condition) {
-                if (is_array($conditions))
-                    call_user_func([$this, $conditions[0]], $param, $condition[1]);
-                else
-                    call_user_func([$this, $condition], $param);
+                $function = is_array($condition) ? $condition[0] : $condition;
+                $args = is_array($condition) ? (
+                    count($condition) > 2 ? array_slice($condition, 1) : $condition[1]
+                ) : null;
+
+                call_user_func([$this, $function], $param, $args);
             }
         }
 
     }
 
-    private function username($param) {
+    private function username(string $param) {
+        if (preg_match("/^[a-zA-Z0-9_]+$/", trim($this->data[$param])) === 0)
+            Error::getInstance()->addError($param,
+                "Username must only contains alphabetic characters ,numbers and underline."
+            );
 
     }
 
-    private function alphabic($param) {
+    private function alphabetic(string $param) {
+        if (preg_match("/^[a-zA-Z]+$/", trim($this->data[$param])) === 0)
+            Error::getInstance()->addError($param,
+                "$param must only contains alphabetic characters."
+            );
+    }
+
+    private function numeric(string $param) {
+        if (preg_match("/^[0-9]+$/", trim($this->data[$param])) === 0)
+            Error::getInstance()->addError($param,
+                "$param must only contains numbers."
+            );
+    }
+
+    private function email(string $param) {
+        if (preg_match("/^[a-zA-Z][a-zA-Z0-9_.]*@[a-zA-Z0-9.]+\.[a-z]{2,5}$/", trim($this->data[$param])) === 0)
+            Error::getInstance()->addError($param,
+                "It is not an email format."
+            );
+    }
+
+    private function min(string $param, $min) {
+        if (trim($this->data[$param]) < $min)
+            Error::getInstance()->addError($param,
+                "amount $param must be greater than $min"
+            );
+    }
+
+    private function max(string $param, $max) {
+        if (trim($this->data[$param]) > $max)
+            Error::getInstance()->addError($param,
+                "amount $param must be less than $max"
+        );
+    }
+
+    private function minLen(string $param, $min) {
+        if (strlen(trim($this->data[$param])) < $min)
+            Error::getInstance()->addError($param,
+                "the length of $param must be greater than $min"
+            );
+    }
+
+    private function maxLen(string $param, $max) {
+        if (strlen(trim($this->data[$param])) > $max)
+            Error::getInstance()->addError($param,
+                "the length of  $param must be less than $max"
+            );
+    }
+
+    private function size(string $param, $size) {
 
     }
 
-    private function numeric($param) {
-
-    }
-
-    private function email($param) {
-
-    }
-
-    private function min($param, $min) {
-
-    }
-
-    private function max($param, $max) {
-
-    }
-
-    private function size($param, $size) {
-
-    }
-
-    private function type($param, $types) {
+    private function type(string $param, $types) {
 
     }
 }
