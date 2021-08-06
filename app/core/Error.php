@@ -8,14 +8,14 @@ class Error {
 
     private function __construct() {}
 
-    public static function getInstance() {
+    public static function getInstance() : Error {
         if (self::$instance == null)
             self::$instance = new Error();
 
         return self::$instance;
     }
 
-    public function addError($errorName, $errorMessage) {
+    public function addError(string $errorName, string $errorMessage) : void {
         $this->errors[$errorName][] = $errorMessage;
     }
 
@@ -23,11 +23,11 @@ class Error {
         return $this->errors != [];
     }
 
-    public function hasErrorName($errorName) : bool {
+    public function hasErrorName(string $errorName) : bool {
         return array_key_exists($errorName, $this->errors);
     }
 
-    public function getError($errorName) {
+    public function getError(string $errorName) : array {
         return $this->errors[$errorName];
     }
     
