@@ -1,0 +1,11 @@
+{
+    "name": "maktab/homework_6",
+    "description": "just a practice",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/",
+            "route\\": "web/"
+        }
+    }
+}
