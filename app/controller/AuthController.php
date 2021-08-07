@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\Error;
 use app\core\Request;
+use app\core\Response;
 use app\core\Validation;
 use app\core\View;
 use app\models\User;
@@ -19,7 +20,16 @@ class AuthController extends Controller {
     }
 
     public function signIn(Request $request) {
+        $request = $request->getParams();
 
+        $id = User::Do()->validateSignIn($request['email'], $request['password']);
+        if ($id !== false) {
+            Response::setUserCookie($id);
+            header("Location: /dashboard/files");
+        } else {
+            Error::getInstance()->addError('signIn', "email and password don't match :(");
+            $this->render('/signIn', ['title' => 'Sign In']);
+        }
     }
 
     public function signUp(Request $request) {
