@@ -51,6 +51,7 @@ class View {
      */
     public function renderView(string $viewName, array $params) : void {
 
+        $errors = Error::getInstance();
         foreach ($params as $key => $value)
             $$key = $value; 
 
