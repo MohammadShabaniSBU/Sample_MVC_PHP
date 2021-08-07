@@ -18,17 +18,21 @@ class Validation {
 
     public function rules($rules) {
         $this->rules = $rules;
+        return $this;
     }
 
     public function data($data) {
         $this->data = $data;
+        return $this;
     }
 
     public function validate() {
         foreach ($this->rules as $param => $conditions) {
 
             if (!array_key_exists($param, $this->data)) {
-                // add error
+                Error::getInstance()->addError($param,
+                    "$param input must exist",
+                );
                 continue;
             }
 
@@ -76,14 +80,14 @@ class Validation {
     private function min(string $param, $min) {
         if (trim($this->data[$param]) < $min)
             Error::getInstance()->addError($param,
-                "amount $param must be greater than $min"
+                "amount of $param must be greater than $min"
             );
     }
 
     private function max(string $param, $max) {
         if (trim($this->data[$param]) > $max)
             Error::getInstance()->addError($param,
-                "amount $param must be less than $max"
+                "amount of $param must be less than $max"
         );
     }
 
@@ -98,6 +102,20 @@ class Validation {
         if (strlen(trim($this->data[$param])) > $max)
             Error::getInstance()->addError($param,
                 "the length of  $param must be less than $max"
+            );
+    }
+
+    private function confirmation(string $param) {
+        if (!array_key_exists($param . '-confirmation', $this->data)) {
+            Error::getInstance()->addError($param,
+                "your $param must be confirmed",
+            );
+            return;
+        }
+
+        if ($this->data[$param . '-confirmation'] != $this->data[$param])
+            Error::getInstance()->addError($param . "-confirmation",
+                "$param doesn't match $param confirmation",
             );
     }
 
