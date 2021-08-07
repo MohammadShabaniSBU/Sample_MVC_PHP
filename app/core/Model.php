@@ -3,16 +3,16 @@
 namespace app\core;
 
 abstract class Model {
-    private $dsn = 'mysql:host=127.0.0.1;dbname=homework_6;';
-    private $username = 'root';
-    private $password = '13801019';
-    private $db;
+    private string $dsn = 'mysql:host=127.0.0.1;dbname=homework_6;';
+    private string $username = 'root';
+    private string $password = '13801019';
+    private \PDO $db;
 
-    private $tableName;
-    private $query = '';
-    private $condition = '';
-    private $data = [];
-    private $statment;
+    private string $tableName;
+    private string $query = '';
+    private string $condition = '';
+    private array $data = [];
+    private \PDOStatement $statement;
 
     protected function __construct(string $tableName) {
         $this->tableName = $tableName;
@@ -21,7 +21,7 @@ abstract class Model {
 
     public abstract static function Do();
 
-    public function insert($data) {
+    public function insert(array $data) {
         $this->validate();
 
         $this->query = "INSERT INTO {$this->tableName} {$this->format(array_keys($data))} VALUES {$this->format(array_keys($data), ':')} ";
@@ -30,10 +30,11 @@ abstract class Model {
         return $this;    
     }
 
-    public function select($targets) {
+    public function select($targets = '*') {
         $this->validate();
 
-        $this->query = "SELECT {$this->formatNonPranteces($targets)} FROM {$this->tableName} ";
+        $columns = is_array($targets) ? $this->formatNonPranteces($targets) : $targets;
+        $this->query = "SELECT {$columns} FROM {$this->tableName} ";
 
         return $this;
     }
@@ -70,23 +71,22 @@ abstract class Model {
     }
 
     private function prepare() {
-//        echo $this->query . $this->condition . ';';
-        $this->statment = $this->db->prepare($this->query . $this->condition . ';');
+        $this->statement = $this->db->prepare($this->query . $this->condition . ';');
     }
 
     public function execute() {
         $this->prepare();
-        $this->statment->execute($this->data);
+        $this->statement->execute($this->data);
     }
 
     public function fetch() {
         $this->execute();
-        return $this->statment->fetch(\PDO::FETCH_ASSOC);
+        return $this->statement->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function fetchAll() {
         $this->execute();
-        return $this->statment->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     private function format(array $targets, $prefix = '') {
