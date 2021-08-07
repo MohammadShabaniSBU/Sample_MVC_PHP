@@ -28,7 +28,11 @@ class Error {
     }
 
     public function getError(string $errorName) : array {
-        return $this->errors[$errorName];
+        return $this->errors[$errorName] ?? [];
+    }
+
+    public function getErrors() : array {
+        return $this->errors ?? [];
     }
     
 }
