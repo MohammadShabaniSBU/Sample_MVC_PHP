@@ -15,4 +15,8 @@ class User extends Model {
         return self::$instance;
     }
 
+    public function validateSignIn(string $email, string $password) {
+        return $this->select()->where('email', $email)->where('password', md5($password))->fetch()['id'] ?? false;
+    }
+
 }
