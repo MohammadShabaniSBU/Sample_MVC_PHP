@@ -4,7 +4,12 @@
             <div class="border border-4 rounded-3 bg-white border-success">
                 <div class="px-4 py-2">
                     <h2 class="text-success text-center mb-5">Sign In</h2>
-                    <form action=""> 
+                    <?php if ($errors->hasErrorName('signIn')) { ?>
+                        <div class="alert alert-danger">
+                            <?php echo $errors->getError('signIn')[0]; ?>
+                        </div>
+                    <?php } ?>
+                    <form action="/signIn" method="post">
                         <div class="form-floating mb-3">
                             <input type="email" name="email" class="form-control" id="email" placeholder="n">
                             <label for="email">Email</label>
