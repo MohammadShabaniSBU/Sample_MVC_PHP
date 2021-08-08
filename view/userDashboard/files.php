@@ -56,25 +56,9 @@
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-10 h-80-vh border rounded-3 bg-light">
             <div class="row h-100">
-                <div class="col-2 h-100 border-end border-success pe-0">
-                    <a href="" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
-                        Files
-                    </a>
-                    <a href="" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
-                        Profile
-                    </a>
-                </div>
+                <?php include \app\core\App::$root . '/view/userDashboard/components/sidebar.php';  ?>
                 <div class="col-10">
-                    <div class="d-flex justify-content-between align-items-center p-2">
-                        <div class="fw-bold fs-4">
-                            mohammad shabani
-                        </div>
-                        <div>
-                            <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
-                                <i class="bi bi-x-circle fs-3 text-danger"></i>
-                            </a>
-                        </div>
-                    </div>
+                    <?php include \app\core\App::$root . '/view/userDashboard/components/headbar.php';  ?>
 
                     <div class='p-2'>
                         <table class="table table-striped text-center">
