@@ -2,10 +2,11 @@
 
 namespace route;
 
-use app\controller\UserController;
 use app\core\Route;
 use app\core\View;
 
+use app\controller\AdminController;
+use app\controller\UserController;
 use app\controller\HomeController;
 use app\controller\AuthController;
 
@@ -26,8 +27,10 @@ class RouteProvider {
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
 
-        Route::get('/dashboard/downloaded', [UserController::class, 'showDownloads']);
-        Route::get('/dashboard/uploaded', [UserController::class, 'showUploaded']);
+        Route::get('/dashboard/downloads', [UserController::class, 'showDownloads']);
+        Route::get('/dashboard/uploads', [UserController::class, 'showUploads']);
+        Route::get('/dashboard/requests', [AdminController::class, 'showRequests']);
+        Route::get('/dashboard/users', [AdminController::class, 'showUsers']);
         Route::get('/dashboard/profile', [UserController::class, 'showProfile']);
     }
 }
