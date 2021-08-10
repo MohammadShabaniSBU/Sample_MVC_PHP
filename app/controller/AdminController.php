@@ -12,4 +12,9 @@ class AdminController extends Controller {
 
         $this->render('dashboard/users', ['title' => 'Users Management']);
     }
+
+    public function showSettings() {
+
+        $this->render('dashboard/settings', ['title' => 'Settings']);
+    }
 }
