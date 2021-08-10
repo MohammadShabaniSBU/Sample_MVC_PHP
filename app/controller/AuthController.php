@@ -25,7 +25,7 @@ class AuthController extends Controller {
         $id = User::Do()->validateSignIn($request['email'], $request['password']);
         if ($id !== false) {
             Response::setUserCookie($id);
-            header("Location: /dashboard/files");
+            header("Location: /dashboard/uploads");
         } else {
             Error::getInstance()->addError('signIn', "email and password don't match :(");
             $this->render('/signIn', ['title' => 'Sign In']);
