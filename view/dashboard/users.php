@@ -56,9 +56,9 @@
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-10 h-80-vh border rounded-3 bg-light">
             <div class="row h-100">
-                <?php include \app\core\App::$root . '/view/userDashboard/components/sidebar.php';  ?>
+                <?php include \app\core\App::$root . '/view/dashboard/components/sidebar.php';  ?>
                 <div class="col-10">
-                    <?php include \app\core\App::$root . '/view/userDashboard/components/headbar.php';  ?>
+                    <?php include \app\core\App::$root . '/view/dashboard/components/headbar.php';  ?>
 
                     <div class='p-2'>
                         <table class="table table-striped text-center">

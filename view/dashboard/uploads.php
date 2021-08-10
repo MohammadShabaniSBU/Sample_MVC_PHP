@@ -49,8 +49,9 @@
   </div>
 </div>
 
-
-
+<script type="application/javascript">
+    // new bootstrap.Modal(document.getElementById('editModal'), {}).show()
+</script>
 
 <div class="row m-0">
     <div class="d-flex justify-content-center align-items-center h-100-vh">
