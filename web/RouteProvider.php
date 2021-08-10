@@ -31,6 +31,7 @@ class RouteProvider {
         Route::get('/dashboard/uploads', [UserController::class, 'showUploads']);
         Route::get('/dashboard/requests', [AdminController::class, 'showRequests']);
         Route::get('/dashboard/users', [AdminController::class, 'showUsers']);
+        Route::get('/dashboard/settings', [AdminController::class, 'showSettings']);
         Route::get('/dashboard/profile', [UserController::class, 'showProfile']);
     }
 }
