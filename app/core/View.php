@@ -22,7 +22,6 @@ class View {
      * @return View return the instance itself
      */
     public function addMainLayout() : View {
-        $resources = App::$root . '/resources';
 
         ob_start();
 

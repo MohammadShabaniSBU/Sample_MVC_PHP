@@ -28,7 +28,7 @@ class Request {
     }
 
     /**
-     * get the inputs which is sent via htttp request
+     * get the inputs which is sent via http request
      * 
      * @return array|null 
      */
