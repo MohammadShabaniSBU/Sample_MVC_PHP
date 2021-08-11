@@ -19,4 +19,8 @@ class User extends Model {
         return $this->select()->where('email', $email)->where('password', md5($password))->fetch()['id'] ?? false;
     }
 
+    public function getUserById(int $id) {
+        return $this->select()->where('id', $id)->fetch();
+    }
+
 }
