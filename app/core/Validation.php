@@ -2,10 +2,15 @@
 
 namespace app\core;
 
+use app\core\traits\Formatter;
+
 class Validation {
+    use Formatter;
+
     private static $instance = null;
-    private $rules = null;
-    private $data = null;
+    private ?array $rules = null;
+    private ?array $data = null;
+    private ?array $files = null;
 
     private function __construct() {}
 
@@ -21,15 +26,20 @@ class Validation {
         return $this;
     }
 
-    public function data($data) {
+    public function data(array $data) : Validation {
         $this->data = $data;
+        return $this;
+    }
+
+    public function files(array $files) : Validation {
+        $this->files = $files;
         return $this;
     }
 
     public function validate() {
         foreach ($this->rules as $param => $conditions) {
 
-            if (!array_key_exists($param, $this->data)) {
+            if (!array_key_exists($param, $this->data) && !array_key_exists($param, $this->files)) {
                 Error::getInstance()->addError($param,
                     "$param input must exist",
                 );
@@ -60,6 +70,13 @@ class Validation {
         if (preg_match("/^[a-zA-Z]+$/", trim($this->data[$param])) === 0)
             Error::getInstance()->addError($param,
                 "$param must only contains alphabetic characters."
+            );
+    }
+
+    private function alphanumeric(string $param) {
+        if (preg_match("/^[a-zA-Z0-9\s]+$/", trim($this->data[$param])) === 0)
+            Error::getInstance()->addError($param,
+                "$param must only contains alphabetic and numeric characters."
             );
     }
 
@@ -121,9 +138,31 @@ class Validation {
 
     private function size(string $param, $size) {
 
+        if ($this->files[$param]['size'] > $size)
+            Error::getInstance()->addError($param, "Your $param can be at last {$this->formatSize($size)}.");
     }
 
     private function type(string $param, $types) {
+        $ok = false;
+        $fileType = strtolower(pathinfo($this->files[$param]['name'],PATHINFO_EXTENSION));
+
+        if (is_string($types)) {
+
+            if ($fileType == $types)
+                $ok = true;
+        } else {
+
+            foreach ($types as $type)
+                if ($type == $fileType) {
+                    $ok = true;
+                    break;
+                }
+        }
+
+        $types = is_array($types) ? $this->format($types) : $types;
+        if (!$ok)
+            Error::getInstance()->addError($param, "Your $param must one of the following types: {$types}.");
 
     }
+
 }
