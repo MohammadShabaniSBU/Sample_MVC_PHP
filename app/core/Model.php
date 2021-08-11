@@ -2,7 +2,11 @@
 
 namespace app\core;
 
+use app\core\traits\Formatter;
+
 abstract class Model {
+    use Formatter;
+
     private string $dsn = 'mysql:host=127.0.0.1;dbname=homework_6;';
     private string $username = 'root';
     private string $password = '13801019';
@@ -24,7 +28,7 @@ abstract class Model {
     public function insert(array $data) {
         $this->validate();
 
-        $this->query = "INSERT INTO {$this->tableName} {$this->format(array_keys($data))} VALUES {$this->format(array_keys($data), ':')} ";
+        $this->query = "INSERT INTO {$this->tableName} {$this->format(array_keys($data), '','(', ')')} VALUES {$this->format(array_keys($data), ':', '(', ')' )} ";
 
         $this->addData($data);
         return $this;    
@@ -33,7 +37,7 @@ abstract class Model {
     public function select($targets = '*') {
         $this->validate();
 
-        $columns = is_array($targets) ? $this->formatNonPranteces($targets) : $targets;
+        $columns = is_array($targets) ? $this->format($targets) : $targets;
         $this->query = "SELECT {$columns} FROM {$this->tableName} ";
 
         return $this;
@@ -87,32 +91,6 @@ abstract class Model {
     public function fetchAll() {
         $this->execute();
         return $this->statement->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    private function format(array $targets, $prefix = '') {
-        $string = '(';
-
-        foreach ($targets as $target) {
-
-            $string .= $prefix . $target . ',';
-        
-        }
-
-        return preg_replace('/,$/', ')', $string);
-    }
-
-    private function formatNonPranteces($targets) {
-        $string = $this->format($targets);
-        return substr($string, 1, strlen($string) - 2);
-    }
-
-    private function formatEquation($targets) {
-        $string = '';
-
-        foreach ($targets as $target) 
-            $string .= "$target=:$target,";
-
-        return substr($string, 0, strlen($string) - 1);
     }
 
     private function addData($values) {
