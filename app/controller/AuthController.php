@@ -3,10 +3,10 @@
 namespace app\controller;
 
 use app\core\Error;
+use app\core\Redirect;
 use app\core\Request;
 use app\core\Response;
 use app\core\Validation;
-use app\core\View;
 use app\models\User;
 
 class AuthController extends Controller {
@@ -24,11 +24,13 @@ class AuthController extends Controller {
 
         $id = User::Do()->validateSignIn($request['email'], $request['password']);
         if ($id !== false) {
+
             Response::setUserCookie($id);
-            header("Location: /dashboard/uploads");
+            Redirect::to('/dashboard/uploads')->go();
         } else {
+
             Error::getInstance()->addError('signIn', "email and password don't match :(");
-            $this->render('/signIn', ['title' => 'Sign In']);
+            Redirect::to('/signIn')->data(['errors' => Error::getInstance()])->go();
         }
     }
 
@@ -38,13 +40,13 @@ class AuthController extends Controller {
         Validation::make()->rules($this->signInRules())->data($request)->validate();
 
         if (Error::getInstance()->hasError()) {
-            $this->render('signUp', ['title' => 'Sign Up']);
+            Redirect::to('/signUp')->data(['errors' => Error::getInstance()])->go();
             return;
         }
 
         User::Do()->insert($this->makeSignUpModelData($request))->execute();
 
-        header("Location: /signIn");
+        Redirect::to('/signIn')->go();
 
 
     }
@@ -78,6 +80,7 @@ class AuthController extends Controller {
             'email' => $request['email'],
             'password' => md5($request['password']),
             'type' => 'normal',
+            'status' => 0,
         ];
     }
 
