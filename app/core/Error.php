@@ -3,8 +3,8 @@
 namespace app\core;
 
 class Error {
-    private static $instance = null;
-    private $errors = [];
+    private static ?Error $instance = null;
+    private array $errors = [];
 
     private function __construct() {}
 
