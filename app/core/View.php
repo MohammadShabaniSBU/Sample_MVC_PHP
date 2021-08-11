@@ -51,6 +51,14 @@ class View {
     public function renderView(string $viewName, array $params) : void {
 
         $errors = Error::getInstance();
+
+        foreach ($_SESSION as $key => $value)
+            $$key = $value;
+
+        Session::close();
+
+        unset($key, $value);
+
         foreach ($params as $key => $value)
             $$key = $value; 
 
