@@ -35,6 +35,10 @@ class Request {
     public function getParams() {
         return $_POST ?? $_GET;
     }
+
+    public function getFiles() {
+        return $_FILES;
+    }
 }
 
 ?>
