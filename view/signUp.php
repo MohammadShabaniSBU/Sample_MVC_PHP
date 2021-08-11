@@ -13,7 +13,7 @@
                         <div class="alert alert-danger py-2 px-1" style="font-size: smaller">
                             <ul class="m-0">
                                 <?php foreach ($errors->getError('firstname') as $error) { ?>
-                                <li"><?php echo $error; ?></li>
+                                <li><?php echo $error; ?></li>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -26,7 +26,7 @@
                             <div class="alert alert-danger py-2 px-1" style="font-size: smaller">
                                 <ul class="m-0">
                                     <?php foreach ($errors->getError('lastname') as $error) { ?>
-                                        <li"><?php echo $error; ?></li>
+                                        <li><?php echo $error; ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -39,7 +39,7 @@
                             <div class="alert alert-danger py-2 px-1" style="font-size: smaller">
                                 <ul class="m-0">
                                     <?php foreach ($errors->getError('email') as $error) { ?>
-                                        <li"><?php echo $error; ?></li>
+                                        <li><?php echo $error; ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -52,7 +52,7 @@
                             <div class="alert alert-danger py-2 px-1" style="font-size: smaller">
                                 <ul class="m-0">
                                     <?php foreach ($errors->getError('password') as $error) { ?>
-                                        <li"><?php echo $error; ?></li>
+                                        <li><?php echo $error; ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -65,7 +65,7 @@
                             <div class="alert alert-danger py-2 px-1" style="font-size: smaller">
                                 <ul class="m-0">
                                     <?php foreach ($errors->getError('password-confirmation') as $error) { ?>
-                                        <li"><?php echo $error; ?></li>
+                                        <li><?php echo $error; ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
