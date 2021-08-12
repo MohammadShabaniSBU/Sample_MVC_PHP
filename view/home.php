@@ -70,6 +70,10 @@
     </div>
 </div>
 
+<!-- Logout Modal -->
+<?php include \app\core\App::$root . "/view/modals/logoutModal.php"; ?>
+
+
 <?php if ($errors->hasError()) { ?>
     <script type="application/javascript">
         new bootstrap.Modal(document.getElementById('uploadModal'), {}).show()
@@ -79,29 +83,31 @@
 <div class="row m-0">
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-8 h-80-vh border rounded-3 bg-light">
-
+            <?php if (\app\core\Auth::getInstance()->isLogin()) {?>
             <div class='d-flex justify-content-between align-items-center mx-5 my-3 mb-0'>
                 <h4 class="text-center text-success ">
                     Dear <span class="fw-bold"><?php echo \app\core\Auth::getInstance()->getName(); ?></span>, enjoy unlimited files from all over the world
                 </h4>
                 <div class="d-flex align-items-center">
+                    <a href="/dashboard/uploads" data-bs-toggle="tooltip" data-bs-placement="top" title="Dashboard">
+                        <i class="bi bi-person-lines-fill fs-3 text-warning"></i>
+                    </a>
                     <button class="bg-light border-0 p-0" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal" title="Upload">
                         <i class="bi bi-cloud-arrow-up fs-2 mx-2 text-primary"></i>
                     </button>
-                    <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
+                    <button class="bg-light border-0 p-0" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" title="Logout">
                         <i class="bi bi-x-circle fs-3 text-danger"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
-
-<!--            <div class='d-flex justify-content-center mx-5 my-3 mb-0'>-->
-<!--                <div class='d-flex w-50'>-->
-<!--                    <a href="/signIn" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>-->
-<!--                    <a href="/signUp" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
+            <?php } else { ?>
+            <div class='d-flex justify-content-center mx-5 my-3 mb-0'>
+                <div class='d-flex w-50'>
+                    <a href="/signIn" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>
+                    <a href="/signUp" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>
+                </div>
+            </div>
+            <?php } ?>
             <div class='px-5 py-3'>
                 <div class="row row-cols-3">
                     <div class="col my-2">
