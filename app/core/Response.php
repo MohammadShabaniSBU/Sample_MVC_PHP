@@ -10,4 +10,11 @@ class Response {
             'expires' => time() + 86400,
         ]);
     }
+
+    public static function unsetUserCookie() {
+        setcookie('user_id', 0, [
+            'path' => '/',
+            'expires' => time() - 1,
+        ]);
+    }
 }
