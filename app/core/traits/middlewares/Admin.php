@@ -13,6 +13,6 @@ trait Admin {
     }
 
     protected function redirect(): void {
-        Redirect::to('/signUp')->go();
+        Redirect::to('/signIn')->go();
     }
 }
