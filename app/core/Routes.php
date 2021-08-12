@@ -4,7 +4,7 @@ namespace app\core;
 
 use route\RouteProvider; 
 
-class Route {
+class Routes {
     private Request $request;
     private static $routes = [];
 

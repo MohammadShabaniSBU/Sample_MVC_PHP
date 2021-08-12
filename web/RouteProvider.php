@@ -2,7 +2,7 @@
 
 namespace route;
 
-use app\core\Route;
+use app\core\Routes;
 use app\core\View;
 
 use app\controller\AdminController;
@@ -15,27 +15,27 @@ class RouteProvider {
         
         // define all your routes here
 
-        Route::get('/test', function() {
+        Routes::get('/test', function() {
             View::make()->addMainLayout()->renderView('test', ['title' => "test"]);
         });
 
-        Route::get('/', [HomeController::class, 'index']);
+        Routes::get('/', [HomeController::class, 'index']);
 
-        Route::get('/signIn', [AuthController::class, 'showSignIn']);
-        Route::get('/signUp', [AuthController::class, 'showSignUp']);
+        Routes::get('/signIn', [AuthController::class, 'showSignIn']);
+        Routes::get('/signUp', [AuthController::class, 'showSignUp']);
 
-        Route::post('/signIn', [AuthController::class, 'signIn']);
-        Route::post('/signUp', [AuthController::class, 'signUp']);
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Routes::post('/signIn', [AuthController::class, 'signIn']);
+        Routes::post('/signUp', [AuthController::class, 'signUp']);
+        Routes::post('/logout', [AuthController::class, 'logout']);
 
-        Route::get('/dashboard/downloads', [UserController::class, 'showDownloads']);
-        Route::get('/dashboard/uploads', [UserController::class, 'showUploads']);
-        Route::get('/dashboard/requests', [AdminController::class, 'showRequests']);
-        Route::get('/dashboard/users', [AdminController::class, 'showUsers']);
-        Route::get('/dashboard/settings', [AdminController::class, 'showSettings']);
-        Route::get('/dashboard/profile', [UserController::class, 'showProfile']);
+        Routes::get('/dashboard/downloads', [UserController::class, 'showDownloads']);
+        Routes::get('/dashboard/uploads', [UserController::class, 'showUploads']);
+        Routes::get('/dashboard/requests', [AdminController::class, 'showRequests']);
+        Routes::get('/dashboard/users', [AdminController::class, 'showUsers']);
+        Routes::get('/dashboard/settings', [AdminController::class, 'showSettings']);
+        Routes::get('/dashboard/profile', [UserController::class, 'showProfile']);
 
-        Route::post('/uploadFile', [UserController::class, 'upload']);
+        Routes::post('/uploadFile', [UserController::class, 'upload']);
     }
 }
 

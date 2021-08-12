@@ -69,6 +69,8 @@
                               <th scope="col">Title</th>
                               <th scope="col">Uploaded Time</th>
                               <th scope="col">Price</th>
+                              <th scope="col"
+                              >Status</th>
                               <th scope="col">Count of Download</th>
                               <th scope="col">Download</th>
                               <th scope="col">Edit</th>
@@ -81,6 +83,11 @@
                               <td>Mark</td>
                               <td>Otto</td>
                               <td>@mdo</td>
+                              <td>
+                                  <div class="bg-danger text-light rounded">
+                                      Disactive
+                                  </div>
+                              </td>
                               <td>25</td>
                               <td>
                                 <a href="">
