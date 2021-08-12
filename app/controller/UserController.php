@@ -5,27 +5,50 @@ namespace app\controller;
 use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
+use app\core\traits\middlewares\Auth;
 use app\core\Validation;
 use app\models\File;
 
 class UserController extends Controller {
 
+    use Auth;
+
     public function showUploads() {
+
+        if (!$this->check()) {
+            $this->redirect();
+            return;
+        }
 
         $this->render('dashboard/uploads', ['title' => 'Uploaded Files']);
     }
 
     public function showDownloads() {
 
+        if (!$this->check()) {
+            $this->redirect();
+            return;
+        }
+
         $this->render('dashboard/downloads', ['title' => 'Downloaded Files']);
     }
 
     public function showProfile() {
 
+        if (!$this->check()) {
+            $this->redirect();
+            return;
+        }
+
         $this->render('dashboard/profile', ['title' => 'Profile']);
     }
 
     public function upload(Request $request) {
+
+        if (!$this->check()) {
+            $this->redirect();
+            return;
+        }
 
         Validation::make()->rules($this->uploadRules())->data($request->getParams())->files($request->getFiles())->validate();
 
