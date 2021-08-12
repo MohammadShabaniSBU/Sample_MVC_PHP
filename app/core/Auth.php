@@ -26,8 +26,16 @@ class Auth {
         $this->user = User::Do()->getUserById($_COOKIE['user_id']);
     }
 
+    public function isLogin() {
+        return $this->user != [];
+    }
+
     public function getName() {
         return $this->user['firstname'] . ' ' . $this->user['lastname'];
+    }
+
+    public function getType() {
+        return $this->user['type'];
     }
 
     public function getId() {
