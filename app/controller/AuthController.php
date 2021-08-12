@@ -51,6 +51,11 @@ class AuthController extends Controller {
 
     }
 
+    public function logout() {
+        Response::unsetUserCookie();
+        Redirect::to('/')->go();
+    }
+
     private function signInRules() {
 
         return [
