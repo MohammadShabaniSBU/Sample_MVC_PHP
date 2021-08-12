@@ -5,6 +5,7 @@
     <a href="/dashboard/downloads" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Downloaded Files
     </a>
+    <?php if (\app\core\Auth::getInstance()->isAdmin()) { ?>
     <a href="/dashboard/requests" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Requested Files
     </a>
@@ -14,6 +15,7 @@
     <a href="/dashboard/settings" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Settings
     </a>
+    <?php } ?>
     <a href="/dashboard/profile" class="btn btn-outline-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Profile
     </a>
