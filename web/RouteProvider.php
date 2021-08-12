@@ -26,6 +26,7 @@ class RouteProvider {
 
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
+        Route::post('/logout', [AuthController::class, 'logout']);
 
         Route::get('/dashboard/downloads', [UserController::class, 'showDownloads']);
         Route::get('/dashboard/uploads', [UserController::class, 'showUploads']);
