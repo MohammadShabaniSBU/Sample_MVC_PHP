@@ -30,6 +30,10 @@ class Auth {
         return $this->user != [];
     }
 
+    public function isAdmin() {
+        return $this->getType() == 'admin';
+    }
+
     public function getName() {
         return $this->user['firstname'] . ' ' . $this->user['lastname'];
     }
