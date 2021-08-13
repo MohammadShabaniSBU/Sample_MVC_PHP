@@ -20,10 +20,7 @@ class User extends Model {
     }
 
     public function getAllUsers() : array {
-
-        echo '<pre>';
-        print_r('');
-        echo '</pre>';
+        
         return $this->select()->fetchAll();
     }
 
