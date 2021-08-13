@@ -24,16 +24,13 @@ class Routes {
 
     public function resolve() {
 
-        if ($this->request->getPath() == '/') {
-            Redirect::to('/home')->go();
-            return;
-        }
-
         foreach (self::$routes[$this->request->getMethod()] as $route)
             if ($route->check($this->request->getPath())) {
                 $route->run();
                 return;
             }
+
+        // redirect to 404 page
 
     }
 }

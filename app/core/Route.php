@@ -35,15 +35,19 @@ class Route {
         return $this;
     }
 
+    public function runFunction(string $className, string $methodName) {
+        return call_user_func([new $className, $methodName]);
+    }
+
     public function run() {
         if (is_array($this->callback))
             $this->callback[0] = new $this->callback[0];
 
 
-        if ($this->middleware == null || $this->middleware->check())
+        if ($this->middleware == null || $this->runFunction($this->middleware, 'check'))
             call_user_func($this->callback, App::getInstance()->getRequest());
         else
-            $this->middleware->redirect();
+            $this->runFunction($this->middleware, 'redirect');
     }
 
     public function makeArgs() {
