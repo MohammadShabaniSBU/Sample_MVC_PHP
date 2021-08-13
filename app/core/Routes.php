@@ -14,22 +14,27 @@ class Routes {
     }
 
     public static function get($path, $callback) {
-        self::$routes['GET'][$path] = $callback;
+       return self::$routes['GET'][] = new Route($path, $callback);
     } 
 
 
     public static function post($path, $callback) {
-        self::$routes['POST'][$path] = $callback;
+        return self::$routes['POST'][] = new Route($path, $callback);
     } 
 
     public function resolve() {
 
-        $callback = self::$routes[$this->request->getMethod()][$this->request->getPath()];
+        if ($this->request->getPath() == '/') {
+            Redirect::to('/home')->go();
+            return;
+        }
 
-        if (is_array($callback))
-            $callback[0] = new $callback[0];
+        foreach (self::$routes[$this->request->getMethod()] as $route)
+            if ($route->check($this->request->getPath())) {
+                $route->run();
+                return;
+            }
 
-        call_user_func($callback, $this->request);
     }
 }
 

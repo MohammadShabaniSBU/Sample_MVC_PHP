@@ -15,11 +15,7 @@ class RouteProvider {
         
         // define all your routes here
 
-        Routes::get('/test', function() {
-            View::make()->addMainLayout()->renderView('test', ['title' => "test"]);
-        });
-
-        Routes::get('/', [HomeController::class, 'index']);
+        Routes::get('/home', [HomeController::class, 'index']);
 
         Routes::get('/signIn', [AuthController::class, 'showSignIn']);
         Routes::get('/signUp', [AuthController::class, 'showSignUp']);
@@ -36,6 +32,7 @@ class RouteProvider {
         Routes::get('/dashboard/profile', [UserController::class, 'showProfile']);
 
         Routes::post('/uploadFile', [UserController::class, 'upload']);
+
     }
 }
 
