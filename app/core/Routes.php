@@ -34,6 +34,14 @@ class Routes {
         // redirect to 404 page
 
     }
+
+    public static function getPathByName(string $name) : string {
+        foreach (self::$routes['GET'] as $route)
+            if ($route->getName() == $name)
+                return $route->getURL();
+
+        return '/';
+    }
 }
 
 ?>

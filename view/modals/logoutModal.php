@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <form action="/logout" method="post">
+                <form action="<?php echo \app\core\Routes::getPathByName('logout'); ?>" method="post">
                     <input type="submit" class="btn btn-danger" value="Logout">
                 </form>
             </div>

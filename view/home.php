@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="uploadModal">Upload</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/uploadFile" method="post" enctype="multipart/form-data">
+            <form action="<?php echo \app\core\Routes::getPathByName('upload'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                         <div class="form-floating my-2">
                             <input type="text" class="form-control" <?php if ($errors->hasErrorName('title')) { echo "is-invalid"; }?> name='title' id='title' placeholder=''>
@@ -89,7 +89,7 @@
                     Dear <span class="fw-bold"><?php echo \app\core\Auth::getInstance()->getName(); ?></span>, enjoy unlimited files from all over the world
                 </h4>
                 <div class="d-flex align-items-center">
-                    <a href="/dashboard/uploads" data-bs-toggle="tooltip" data-bs-placement="top" title="Dashboard">
+                    <a href="<?php echo \app\core\Routes::getPathByName('uploads'); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Dashboard">
                         <i class="bi bi-person-lines-fill fs-3 text-warning"></i>
                     </a>
                     <button class="bg-light border-0 p-0" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal" title="Upload">
@@ -103,8 +103,8 @@
             <?php } else { ?>
             <div class='d-flex justify-content-center mx-5 my-3 mb-0'>
                 <div class='d-flex w-50'>
-                    <a href="/signIn" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>
-                    <a href="/signUp" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>
+                    <a href="<?php echo \app\core\Routes::getPathByName('sign in'); ?>" class="btn btn-outline-success rounded-0 rounded-start w-50 m-0">Sign in</a>
+                    <a href="<?php echo \app\core\Routes::getPathByName('sign up'); ?>" class="btn btn-outline-success rounded-0 rounded-end border-start-0 w-50 m-0">Sign up</a>
                 </div>
             </div>
             <?php } ?>

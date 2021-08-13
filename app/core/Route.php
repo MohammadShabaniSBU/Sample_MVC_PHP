@@ -5,7 +5,7 @@ namespace app\core;
 class Route {
     private $path;
     private $callback;
-    private string $name;
+    private string $name = '';
     private $middleware = null;
 
     public function __construct(string $path, $callback) {
@@ -24,6 +24,10 @@ class Route {
 
     public function getName() : string {
         return $this->name;
+    }
+
+    public function getURL() {
+        return $this->path;
     }
 
     private function makeRegex() : string {

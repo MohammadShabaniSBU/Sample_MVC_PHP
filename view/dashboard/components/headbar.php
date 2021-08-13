@@ -6,7 +6,7 @@
         <?php echo \app\core\Auth::getInstance()->getName(); ?>
     </div>
     <div>
-        <a href="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+        <a href="<?php echo \app\core\Routes::getPathByName('home'); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
             <i class="bi bi-house-fill fs-3 text-info"></i>
         </a>
         <button class="bg-light border-0 p-0" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" title="Logout">
