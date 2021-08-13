@@ -63,6 +63,12 @@ class RouteProvider {
             ->middleware(\app\middlewares\Auth::class)
             ->name('upload');
 
+        Routes::post('/changeUserStatus/{id}', [AdminController::class, 'changeUserStatus'])
+            ->middleware(\app\middlewares\Auth::class);
+
+        Routes::get('/test', function () {
+            print_r(User::Do()->getAllUsers());
+        });
     }
 }
 
