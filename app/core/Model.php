@@ -60,6 +60,13 @@ abstract class Model {
         return $this;
     }
 
+    public function join(string $tableName, string $col1, string $operator, string $col2) {
+        $this->query .= "INNER JOIN $tableName ON $col1 $operator $col2 ";
+
+        return $this;
+    }
+
+
     public function where($target, $value, $operation = '=') {
 
         if ($this->condition == '')
@@ -68,10 +75,6 @@ abstract class Model {
         $this->condition .= "AND $target $operation :$target ";
         $this->data[':' . $target] = $value;
         return $this;
-    }
-
-    public function innerJoin() {
-
     }
 
     private function prepare() {

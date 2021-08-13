@@ -10,6 +10,7 @@ use app\controller\AdminController;
 use app\controller\UserController;
 use app\controller\HomeController;
 use app\controller\AuthController;
+use app\models\User;
 
 class RouteProvider {
     public static function makeRoutes() {
@@ -48,7 +49,7 @@ class RouteProvider {
 
         Routes::post('/uploadFile', [UserController::class, 'upload'])
             ->middleware(\app\middlewares\Auth::class);
-
+        
     }
 }
 
