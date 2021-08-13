@@ -7,14 +7,10 @@ use app\core\Auth;
 use app\core\Model;
 
 class File extends Model {
-    private static $instance = null;
 
     public static function Do() {
 
-        if (self::$instance == null)
-            self::$instance = new File('files');
-
-        return self::$instance;
+        return new File('files');
     }
 
     public function saveUploadedFile(array $file, array $data) {

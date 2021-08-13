@@ -5,14 +5,10 @@ namespace app\models;
 use app\core\Model;
 
 class User extends Model {
-    private static $instance = null;
 
     public static function Do() {
-        
-        if (self::$instance == null)
-            self::$instance = new User('users');
 
-        return self::$instance;
+        return new User('users');
     }
 
     public function validateSignIn(string $email, string $password) {
@@ -21,6 +17,14 @@ class User extends Model {
 
     public function getUserById(int $id) {
         return $this->select()->where('id', $id)->fetch();
+    }
+
+    public function getAllUsers() : array {
+
+        echo '<pre>';
+        print_r('');
+        echo '</pre>';
+        return $this->select()->fetchAll();
     }
 
 }
