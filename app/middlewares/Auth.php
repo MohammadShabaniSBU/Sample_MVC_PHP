@@ -7,7 +7,7 @@ use app\core\Redirect;
 
 class Auth implements MiddlewareInterface {
 
-    public function check() {
+    public function check() : bool {
         return User::getInstance()->isLogin();
     }
 

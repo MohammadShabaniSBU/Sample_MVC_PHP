@@ -30,6 +30,7 @@ class Routes {
                 return;
             }
 
+        echo "eshteb zadi";
         // redirect to 404 page
 
     }

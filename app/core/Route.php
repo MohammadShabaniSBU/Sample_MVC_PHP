@@ -27,7 +27,9 @@ class Route {
     }
 
     private function makeRegex() : string {
-        return '/^' . preg_replace("/\//", '\\/', $this->path) . '$/';
+        $temp = preg_replace('/{\w+}/','(\\w+)', $this->path);
+
+        return '/^' . preg_replace("/\//", '\\/', $temp) . '$/';
     }
 
     public function middleware($middleware) : Route {
@@ -45,12 +47,21 @@ class Route {
 
 
         if ($this->middleware == null || $this->runFunction($this->middleware, 'check'))
-            call_user_func($this->callback, App::getInstance()->getRequest());
+            call_user_func_array($this->callback, $this->makeArgs());
         else
             $this->runFunction($this->middleware, 'redirect');
     }
 
     public function makeArgs() {
-        return [];
+        $args = [];
+        if (App::getInstance()->getRequest()->getParams() != [])
+            $args[] = App::getInstance()->getRequest();
+
+        $matches = [];
+        preg_match($this->makeRegex(), App::getInstance()->getRequest()->getPath(), $matches);
+
+        unset($matches[0]);
+
+        return array_merge($args, $matches);;
     }
 }

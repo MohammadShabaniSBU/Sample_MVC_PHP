@@ -4,7 +4,7 @@ namespace app\middlewares;
 
 interface MiddlewareInterface {
 
-    public function check();
+    public function check() : bool;
 
     public function redirect();
 }
