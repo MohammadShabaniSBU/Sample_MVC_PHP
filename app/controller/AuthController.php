@@ -84,8 +84,6 @@ class AuthController extends Controller {
             'lastname' => $request['lastname'],
             'email' => $request['email'],
             'password' => md5($request['password']),
-            'type' => 'normal',
-            'status' => 0,
         ];
     }
 
