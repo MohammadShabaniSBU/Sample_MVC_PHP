@@ -40,6 +40,10 @@ class Routes {
             if ($route->getName() == $name)
                 return $route->getURL();
 
+        foreach (self::$routes['POST'] as $route)
+            if ($route->getName() == $name)
+                return $route->getURL();
+
         return '/';
     }
 }
