@@ -6,6 +6,7 @@ namespace app\controller;
 use app\core\Redirect;
 use app\core\Request;
 use app\core\Routes;
+use app\models\File;
 use app\models\User;
 
 class AdminController extends Controller {
@@ -35,5 +36,19 @@ class AdminController extends Controller {
         }
 
         Redirect::to(Routes::getPathByName('user management'))->go();
+    }
+
+    public function changeFileStatus(Request $request) {
+        $id = $request->getParams()['file_id'];
+
+        switch ($request->getParams()['action']) {
+            case 'Confirm':
+                File::Do()->setFileStatuse($id, 1);
+                break;
+            case 'Reject':
+                File::Do()->setFileStatuse($id, -1);
+        }
+
+        Redirect::to(Routes::getPathByName('requests'))->go();
     }
 }
