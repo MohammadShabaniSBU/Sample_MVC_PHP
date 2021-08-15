@@ -9,6 +9,16 @@
                             <?php echo $errors->getError('signIn')[0]; ?>
                         </div>
                     <?php } ?>
+                    <?php if (isset($errorMessage)) { ?>
+                        <div class="alert alert-danger">
+                            <?php echo $errorMessage; ?>
+                        </div>
+                    <?php } ?>
+                    <?php if (isset($warningMessage)) { ?>
+                        <div class="alert alert-warning">
+                            <?php echo $warningMessage; ?>
+                        </div>
+                    <?php } ?>
                     <form action="/signIn" method="post">
                         <div class="form-floating mb-3">
                             <input type="email" name="email" class="form-control" id="email" placeholder="n">
