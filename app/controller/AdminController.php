@@ -3,7 +3,10 @@
 namespace app\controller;
 
 
+use app\core\Redirect;
 use app\core\Request;
+use app\core\Routes;
+use app\models\User;
 
 class AdminController extends Controller {
 
@@ -23,6 +26,14 @@ class AdminController extends Controller {
     }
 
     public function changeUserStatus(Request $request, $id) {
-        echo $id;
+        switch ($request->getParams()['action']) {
+            case 'active':
+                User::Do()->setStatus($id, 1);
+                break;
+            case 'disactive':
+                User::Do()->setStatus($id, 0);
+        }
+
+        Redirect::to(Routes::getPathByName('user management'))->go();
     }
 }
