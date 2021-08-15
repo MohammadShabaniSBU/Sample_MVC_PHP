@@ -52,7 +52,7 @@ class UserController extends Controller {
           ],
           'file' => [
               ['size', 10 * 1000 * 1000],
-              ['type', 'jpg', 'pdf', 'zip'],
+              ['type', 'jpg', 'pdf', 'zip', 'png'],
           ]
         ];
     }

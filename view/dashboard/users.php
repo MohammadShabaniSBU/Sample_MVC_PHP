@@ -66,7 +66,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <form action="/changeUserStatus/<?php echo $user['id']; ?>" method="post">
-                        <input type="hidden" value="<?php echo $user['status'] ? 'disactive' : 'active'; ?>" name="action">
+                    <input type="hidden" value="<?php echo $user['status'] ? 'disactive' : 'active'; ?>" name="action">
                     <input type="submit" class="btn btn-<?php echo $user['status'] ? 'danger' : 'success'; ?>" value="<?php echo $user['status'] ? 'Disactive' : 'Active'; ?>">
                 </form>
             </div>
