@@ -24,7 +24,7 @@ trait Formatter {
         return substr($string, 0, strlen($string) - 1);
     }
 
-    protected function formatSize(int $size) {
+    public function formatSize(int $size) {
 
         if ($size > 1000 * 1000)
             return $size / (1000 * 1000) . ' Mb';
