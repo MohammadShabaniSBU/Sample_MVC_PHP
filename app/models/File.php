@@ -33,10 +33,26 @@ class File extends Model {
     }
 
     public function getNonConfirmedFiles() {
-        return $this->select(['users.firstname', 'users.lastname', 'files.id', 'files.title', 'files.size', 'files.price', 'files.type', 'files.uploaded_time'])->join('users','users.id', '=', 'files.owner_id')->where('files.status', '0')->fetchAll();
+        return $this->select(['users.firstname', 'users.lastname', 'files.id', 'files.title', 'files.size', 'files.price', 'files.type', 'files.uploaded_time'])->join('users','users.id', '=', 'files.owner_id')
+            ->where('files.status', '0')
+            ->fetchAll();
     }
 
-    public function setFileStatuse(int $id, int $status) : void {
+    public function getFilesWithOwnerId(int $ownerId) : array {
+        return $this->select()
+            ->where('owner_id', $ownerId)
+            ->fetchAll();
+    }
+
+    public function setFileStatus(int $id, int $status) : void {
         $this->update(['status' => $status])->where('id', $id)->execute();
+    }
+
+    public function editFile(array $data, int $id) {
+        $this->update($data)->where('id', $id)->execute();
+    }
+
+    public function deleteFile(int $id) {
+        $this->delete()->where('id', $id)->execute();
     }
 }

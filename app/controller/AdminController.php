@@ -43,10 +43,10 @@ class AdminController extends Controller {
 
         switch ($request->getParams()['action']) {
             case 'Confirm':
-                File::Do()->setFileStatuse($id, 1);
+                File::Do()->setFileStatus($id, 1);
                 break;
             case 'Reject':
-                File::Do()->setFileStatuse($id, -1);
+                File::Do()->setFileStatus($id, -1);
         }
 
         Redirect::to(Routes::getPathByName('requests'))->go();

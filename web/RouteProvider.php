@@ -4,7 +4,6 @@ namespace route;
 
 use app\core\Redirect;
 use app\core\Routes;
-use app\core\View;
 
 use app\controller\AdminController;
 use app\controller\UserController;
@@ -68,6 +67,12 @@ class RouteProvider {
 
         Routes::post('/changeFileStatus', [AdminController::class, 'changeFileStatus'])
             ->middleware(\app\middlewares\Admin::class);
+
+        Routes::post('/edit/file/{id}', [UserController::class, 'editFile'])
+            ->middleware(\app\middlewares\Auth::class);
+
+        Routes::post('/delete/file/{id}', [UserController::class, 'deleteFile'])
+            ->middleware(\app\middlewares\Auth::class);
 
         Routes::get('/test', function () {
             print_r(User::Do()->getAllUsers());

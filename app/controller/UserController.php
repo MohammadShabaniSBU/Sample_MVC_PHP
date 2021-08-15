@@ -5,6 +5,7 @@ namespace app\controller;
 use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
+use app\core\Routes;
 use app\core\Validation;
 use app\models\File;
 
@@ -37,12 +38,30 @@ class UserController extends Controller {
 
     }
 
+    public function editFile(Request $request, $id) {
+
+        Validation::make()->rules($this->editRules())->data($request->getParams())->validate();
+
+        if (!Error::getInstance()->hasError()) {
+            File::Do()->editFile($request->getParams(), $id);
+            Redirect::to(Routes::getPathByName('uploads'))->go();
+        } else
+            Redirect::to(Routes::getPathByName('uploads'))->data(['errors' => Error::getInstance(), 'errorId' => $id])->go();
+    }
+
+    public function deleteFile($id) {
+
+        File::Do()->deleteFile($id);
+        Redirect::to(Routes::getPathByName('uploads'))->go();
+
+    }
+
     public function uploadRules() {
         return [
           'title' => [
               'alphanumeric',
               ['minLen', 4],
-              ['maxLen', 24],
+              ['maxLen', 20],
           ],
           'fileName' => [
               'alphabetic'
@@ -54,6 +73,19 @@ class UserController extends Controller {
               ['size', 10 * 1000 * 1000],
               ['type', 'jpg', 'pdf', 'zip', 'png'],
           ]
+        ];
+    }
+
+    public function editRules() {
+        return [
+            'title' => [
+                'alphanumeric',
+                ['minLen', 4],
+                ['maxLen', 20],
+            ],
+            'price' => [
+                'numeric',
+            ],
         ];
     }
 }
