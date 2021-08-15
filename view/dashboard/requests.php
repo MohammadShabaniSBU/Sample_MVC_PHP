@@ -1,3 +1,9 @@
+<?php
+class Format {
+    use \app\core\traits\Formatter;
+}
+$format = new Format();
+?>
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,38 +70,43 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Owner</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Uploaded Time</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Count of Download</th>
+                                <th scope="col">Upload date</th>
+                                <th scope="col">Size</th>
                                 <th scope="col">Download</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php $i = 1; foreach (\app\models\File::Do()->getNonConfirmedFiles() as $file) { ?>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>25</td>
+                                <th scope="row"><?php echo $i++;?></th>
+                                <td><?php echo $file['firstname'] . ' ' . $file['lastname'];?></td>
+                                <td><?php echo $file['title'];?></td>
+                                <td><?php echo $file['type'];?></td>
+                                <td><?php echo $file['price'];?></td>
+                                <td><?php echo date('Y/m/d h:s:i', $file['uploaded_time']); ?></td>
+                                <td><?php echo $format->formatSize($file['size']); ?></td>
                                 <td>
                                     <a href="">
-                                        <i class="bi bi-cloud-download fs-5 text-success"></i>
+                                        <i class="bi bi-cloud-download fs-5 text-primary"></i>
                                     </a>
                                 </td>
-                                <td>
-                                    <a href=""  data-bs-toggle="modal" data-bs-target="#editModal">
-                                        <i class="bi bi-pencil fs-5 text-primary"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        <i class="bi bi-trash fs-5 text-danger"></i>
-                                    </a>
-                                </td>
+                                <form method="post" action="/changeFileStatus">
+                                    <input type="hidden" name="file_id" value="<?php echo $file['id'] ?>">
+                                    <td>
+                                        <input class="btn btn-success py-0" type="submit" value="Confirm" name="action">
+                                    </td>
+                                    <td>
+                                        <input class="btn btn-danger py-0" type="submit" value="Reject" name="action">
+                                    </td>
+                                </form>
                             </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
