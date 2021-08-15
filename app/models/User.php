@@ -24,4 +24,12 @@ class User extends Model {
         return $this->select()->fetchAll();
     }
 
+    public function setStatus(int $id, int $state) : void {
+        $this->update(['status' => $state])->where('id', $id)->execute();
+    }
+
+    public function isBan($id) {
+        return $this->select('status')->where('id', $id)->fetch()['status'] == 0;
+    }
+
 }
