@@ -28,7 +28,7 @@ abstract class Model {
     public function insert(array $data) {
         $this->validate();
 
-        $this->query = "INSERT INTO {$this->tableName} {$this->format(array_keys($data), '','(', ')')} VALUES {$this->format(array_keys($data), ':', '(', ')' )} ";
+        $this->query = "INSERT INTO {$this->tableName} {$this->format(array_keys($data), '','(', ')', ', ', '`')} VALUES {$this->format(array_keys($data), ':', '(', ')' )} ";
 
         $this->addData($data);
         return $this;    
