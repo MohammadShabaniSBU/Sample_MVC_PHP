@@ -15,17 +15,17 @@ class UserController extends Controller {
 
     public function showUploads() {
 
-        $this->render('dashboard/uploads', ['title' => 'Uploaded Files']);
+        $this->render('dashboard/uploads', ['title' => 'Uploaded Files', 'page' => 'upload']);
     }
 
     public function showDownloads() {
 
-        $this->render('dashboard/downloads', ['title' => 'Downloaded Files']);
+        $this->render('dashboard/downloads', ['title' => 'Downloaded Files', 'page' => 'download']);
     }
 
     public function showProfile() {
 
-        $this->render('dashboard/profile', ['title' => 'Profile']);
+        $this->render('dashboard/profile', ['title' => 'Profile', 'page' => 'profile']);
     }
 
     public function upload(Request $request) {

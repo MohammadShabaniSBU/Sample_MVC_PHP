@@ -13,17 +13,17 @@ class AdminController extends Controller {
 
     public function showRequests() {
 
-        $this->render('dashboard/requests', ['title' => 'Requested Files']);
+        $this->render('dashboard/requests', ['title' => 'Requested Files', 'page' => 'request']);
     }
 
     public function showUsers() {
 
-        $this->render('dashboard/users', ['title' => 'Users Management']);
+        $this->render('dashboard/users', ['title' => 'Users Management', 'page' => 'users']);
     }
 
     public function showSettings() {
 
-        $this->render('dashboard/settings', ['title' => 'Settings']);
+        $this->render('dashboard/settings', ['title' => 'Settings', 'page' => 'setting']);
     }
 
     public function changeUserStatus(Request $request, $id) {
