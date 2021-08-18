@@ -1,68 +1,65 @@
-
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModal">Edit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" class="form-floating">
-                    <div class="form-floating my-2">
-                        <input type="text" class="form-control" name='title' id='title' placeholder=''>
-                        <label for="title">Title</label>
-                    </div>
-                    <div class="form-floating my-2">
-                        <input type="text" class="form-control" name='price' id='price' placeholder=''>
-                        <label for="price">Price</label>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModal">Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    Are you sure to delete this file?
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="application/javascript">
-    // new bootstrap.Modal(document.getElementById('editModal'), {}).show()
-</script>
+<?php
+$settings = \app\models\Settings::Do()->getSettings();
+?>
 
 <div class="row m-0">
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-10 h-80-vh border rounded-3 bg-light">
             <div class="row h-100">
                 <?php include \app\core\App::$root . '/view/dashboard/components/sidebar.php';  ?>
-                <div class="col-10">
+                <div class="col-10 h-100">
                     <?php include \app\core\App::$root . '/view/dashboard/components/headbar.php';  ?>
 
-                    <div class='p-2'>
+                    <div class='p-2 h-75'>
+                        <div class="h-100">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h3>
+                                        Types
+                                    </h3>
+                                    <hr>
+                                    <form class="form-floating my-2" action="" method="post">
+                                        <input class="form-control" type="text" id="type" placeholder="" name="type">
+                                        <label for="type">Enter a new type</label>
+                                        <?php if ($errors->hasError() && $errors->hasErrorName('type')) { ?>
+                                        <div class="alert alert-danger">
+                                            <?php foreach ($errors->getErrorName('type') as $error) { ?>
+                                            <ul>
+                                                <?php echo $error;?>
+                                            </ul>
+                                            <?php } ?>
+                                        </div>
+                                        <?php } ?>
+                                        <input class="btn btn-success my-2" type="submit" value="Add Type">
+                                    </form>
 
+                                    <ul class="list-group list-group-flush">
+                                        <?php foreach ($settings['types'] as $type) { ?>
+                                            <li class="list-group-item">
+                                                <?php echo $type['value']; ?>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <h3>
+                                        File Size
+                                    </h3>
+                                    <hr>
+                                    <form action="" method="post">
+                                        <div class="form-floating my-2">
+                                            <input type="number" class="form-control" name="maxSize" id="maxSize" placeholder="" value="<?php echo $settings['maxSize']['value']; ?>">
+                                            <label for="maxSize">Max size for files to upload (bytes)</label>
+                                        </div>
+                                        <div class="form-floating my-2">
+                                            <input type="number" class="form-control" name="maxUploadSize" id="maxUploadSize" placeholder="" value="<?php echo $settings['maxUploadSize']['value']; ?>">
+                                            <label for="maxUploadSize">Max size that each user can upload in a day (bytes)</label>
+                                        </div>
+                                        <input class="btn btn-success" value="Save Changes" type="submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
