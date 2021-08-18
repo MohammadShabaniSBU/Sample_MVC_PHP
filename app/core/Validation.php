@@ -39,23 +39,32 @@ class Validation {
     public function validate() {
         foreach ($this->rules as $param => $conditions) {
 
-            if (!array_key_exists($param, $this->data) && !array_key_exists($param, $this->files)) {
-                Error::getInstance()->addError($param,
-                    "$param input must exist",
-                );
-                continue;
-            }
-
             foreach ($conditions as $condition) {
                 $function = is_array($condition) ? $condition[0] : $condition;
                 $args = is_array($condition) ? (
                     count($condition) > 2 ? array_slice($condition, 1) : $condition[1]
                 ) : null;
 
-                call_user_func([$this, $function], $param, $args);
+                if (call_user_func([$this, $function], $param, $args) === false)
+                    break;
             }
         }
+    }
 
+    private function required(string $param) : bool {
+        if (!array_key_exists($param, $this->data) && !(array_key_exists($param, $this->files) && $this->files[$param]['size'] > 0)) {
+            Error::getInstance()->addError($param, "$param input must exist");
+            return false;
+        }
+
+        return true;
+    }
+
+    private function optional(string $param) : bool {
+        if (!array_key_exists($param, $this->data) && !(array_key_exists($param, $this->files) && $this->files[$param]['size'] > 0))
+            return false;
+
+        return true;
     }
 
     private function username(string $param) {
@@ -161,7 +170,7 @@ class Validation {
 
         $types = is_array($types) ? $this->format($types) : $types;
         if (!$ok)
-            Error::getInstance()->addError($param, "Your $param must one of the following types: {$types}.");
+            Error::getInstance()->addError($param, "Your $param must be one of the following types: {$types}.");
 
     }
 
