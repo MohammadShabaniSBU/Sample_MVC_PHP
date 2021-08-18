@@ -74,6 +74,9 @@ class RouteProvider {
         Routes::post('/delete/file/{id}', [UserController::class, 'deleteFile'])
             ->middleware(\app\middlewares\Auth::class);
 
+        Routes::post('/edit/profile/{id}', [UserController::class, 'editProfile'])
+            ->middleware(\app\middlewares\Auth::class);
+
         Routes::get('/test', function () {
             print_r(User::Do()->getAllUsers());
         });
