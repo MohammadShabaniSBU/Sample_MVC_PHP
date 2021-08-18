@@ -15,12 +15,15 @@ class User extends Model {
         return $this->select()->where('email', $email)->where('password', md5($password))->fetch()['id'] ?? false;
     }
 
+    public function editProfile(array $data, int $id) {
+        $this->update($data)->where('id', $id)->execute();
+    }
+
     public function getUserById(int $id) {
         return $this->select()->where('id', $id)->fetch();
     }
 
     public function getAllUsers() : array {
-        
         return $this->select()->fetchAll();
     }
 
