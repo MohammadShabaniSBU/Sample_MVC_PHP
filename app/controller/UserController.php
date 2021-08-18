@@ -2,12 +2,14 @@
 
 namespace app\controller;
 
+use app\core\App;
 use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
 use app\core\Routes;
 use app\core\Validation;
 use app\models\File;
+use app\models\User;
 
 class UserController extends Controller {
 
@@ -40,7 +42,7 @@ class UserController extends Controller {
 
     public function editFile(Request $request, $id) {
 
-        Validation::make()->rules($this->editRules())->data($request->getParams())->validate();
+        Validation::make()->rules($this->editFileRules())->data($request->getParams())->validate();
 
         if (!Error::getInstance()->hasError()) {
             File::Do()->editFile($request->getParams(), $id);
@@ -53,39 +55,93 @@ class UserController extends Controller {
 
         File::Do()->deleteFile($id);
         Redirect::to(Routes::getPathByName('uploads'))->go();
+    }
 
+    public function editProfile(Request $request, int $id) {
+        Validation::make()->rules($this->editProfileRules())->data($request->getParams())->files($request->getFiles())->validate();
+
+        if (!Error::getInstance()->hasError()) {
+            User::Do()->editProfile($this->editProfileMakeData($request->getParams(), $request->getFiles()), $id);
+            Redirect::to(Routes::getPathByName('profile'))->go();
+        } else
+            Redirect::to(Routes::getPathByName('profile'))->data(['errors' => Error::getInstance()])->go();
+    }
+
+    public function editProfileMakeData(array $params, array $files) {
+        if ($files['image']['size'] > 0) {
+            $image_url = "/storage/profiles/" . time();
+            $image_path = App::$root . '/public' .$image_url;
+
+            move_uploaded_file($files['image']['tmp_name'], $image_path);
+
+            $params['image_url'] = $image_url;
+            $params['image_path'] = $image_path;
+        }
+        return $params;
     }
 
     public function uploadRules() {
         return [
           'title' => [
+              'required',
               'alphanumeric',
               ['minLen', 4],
               ['maxLen', 20],
           ],
           'fileName' => [
+              'required',
               'alphabetic'
           ],
           'price' => [
+              'required',
               'numeric',
           ],
           'file' => [
+              'required',
               ['size', 10 * 1000 * 1000],
               ['type', 'jpg', 'pdf', 'zip', 'png'],
           ]
         ];
     }
 
-    public function editRules() {
+    public function editFileRules() {
         return [
             'title' => [
+                'required',
                 'alphanumeric',
                 ['minLen', 4],
                 ['maxLen', 20],
             ],
             'price' => [
+                'required',
                 'numeric',
             ],
+        ];
+    }
+
+    public function editProfileRules() : array {
+        return [
+            'firstname' => [
+                'required',
+                'alphabetic',
+                ['minLen', 4],
+                ['maxLen', 16],
+            ],
+            'lastname' => [
+                'required',
+                'alphabetic',
+                ['minLen', 4],
+                ['maxLen', 16],
+            ],
+            'email' => [
+                'required',
+                'email',
+            ],
+            'image' => [
+                'optional',
+                ['size', 10 * 1000 * 1000],
+                ['type', 'jpg', 'png'],
+            ]
         ];
     }
 }
