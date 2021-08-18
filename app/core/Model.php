@@ -72,7 +72,7 @@ abstract class Model {
         if ($this->condition == '')
             $this->condition = 'Where True ';
         $name = str_replace('.', '', $target);
-        $this->condition .= "AND $target $operation :$name ";
+        $this->condition .= "AND `$target` $operation :$name ";
         $this->data[':' . $name] = $value;
         return $this;
     }

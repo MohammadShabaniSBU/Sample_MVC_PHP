@@ -19,7 +19,7 @@ trait Formatter {
         $string = '';
 
         foreach ($targets as $target)
-            $string .= "$target=:$target,";
+            $string .= "`$target`=:$target,";
 
         return substr($string, 0, strlen($string) - 1);
     }
@@ -27,10 +27,10 @@ trait Formatter {
     public function formatSize(int $size) {
 
         if ($size > 1000 * 1000)
-            return ((int)(($size / (1000 * 1000)) * 100)) / 100 . ' Mb';
+            return ((int)(($size / (1000 * 1000)) * 100)) / 100 . ' MB';
         else if ($size > 1000)
-            return ((int)(($size / 1000) * 100)) / 100 . ' Kb';
+            return ((int)(($size / 1000) * 100)) / 100 . ' KB';
         else
-            return $size . ' b';
+            return $size . ' B';
     }
 }
