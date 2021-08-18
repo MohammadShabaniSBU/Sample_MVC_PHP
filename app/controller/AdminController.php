@@ -3,10 +3,13 @@
 namespace app\controller;
 
 
+use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
 use app\core\Routes;
+use app\core\Validation;
 use app\models\File;
+use app\models\Settings;
 use app\models\User;
 
 class AdminController extends Controller {
@@ -50,5 +53,37 @@ class AdminController extends Controller {
         }
 
         Redirect::to(Routes::getPathByName('requests'))->go();
+    }
+
+    public function addType(Request $request) {
+        Validation::make()->rules([
+            'type' => [
+                'required',
+                'alphanumeric',
+            ],
+        ])->data($request->getParams())->validate();
+
+        if (!Error::getInstance()->hasError())
+            Settings::Do()->addType($request->getParams()['type'], $request->getParams()['type']);
+
+        Redirect::to(Routes::getPathByName('settings'))->data(['errors' => Error::getInstance()])->go();
+    }
+
+    public function resetSize(Request $request) {
+        Validation::make()->rules([
+            'maxSize' => [
+                'required',
+                'numeric',
+            ],
+            'maxUploadSize' => [
+                'required',
+                'numeric'
+            ],
+        ])->data($request->getParams())->validate();
+
+        if (!Error::getInstance()->hasError())
+            Settings::Do()->updateSize($request->getParams()['maxSize'], $request->getParams()['maxUploadSize']);
+
+        Redirect::to(Routes::getPathByName('settings'))->data(['errors' => Error::getInstance()])->go();
     }
 }

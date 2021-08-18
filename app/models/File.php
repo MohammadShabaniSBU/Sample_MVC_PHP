@@ -33,7 +33,8 @@ class File extends Model {
     }
 
     public function getNonConfirmedFiles() {
-        return $this->select(['users.firstname', 'users.lastname', 'files.id', 'files.title', 'files.size', 'files.price', 'files.type', 'files.uploaded_time'])->join('users','users.id', '=', 'files.owner_id')
+        return $this->select(['users.firstname', 'users.lastname', 'files.id', 'files.title', 'files.size', 'files.price', 'files.type', 'files.uploaded_time'])
+            ->join('users','users.id', '=', 'files.owner_id')
             ->where('files.status', '0')
             ->fetchAll();
     }

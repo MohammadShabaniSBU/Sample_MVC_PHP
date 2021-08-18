@@ -18,43 +18,65 @@ $settings = \app\models\Settings::Do()->getSettings();
                                         Types
                                     </h3>
                                     <hr>
-                                    <form class="form-floating my-2" action="" method="post">
-                                        <input class="form-control" type="text" id="type" placeholder="" name="type">
+                                    <form class="form-floating my-2" action="<?php echo \app\core\Routes::getPathByName('addType'); ?>" method="post">
+                                        <input class="form-control <?php echo $errors->hasError() && $errors->hasErrorName('type') ? 'is-invalid' : ''; ?>" type="text" id="type" placeholder="" name="type">
                                         <label for="type">Enter a new type</label>
                                         <?php if ($errors->hasError() && $errors->hasErrorName('type')) { ?>
-                                        <div class="alert alert-danger">
-                                            <?php foreach ($errors->getErrorName('type') as $error) { ?>
-                                            <ul>
-                                                <?php echo $error;?>
+                                        <div class="alert alert-danger py-0 mt-2">
+                                            <ul class="my-0" style="font-size: smaller">
+                                                <?php foreach ($errors->getError('type') as $error) { ?>
+                                                <li>
+                                                    <?php echo $error;?>
+                                                </li>
+                                                <?php } ?>
                                             </ul>
-                                            <?php } ?>
                                         </div>
                                         <?php } ?>
                                         <input class="btn btn-success my-2" type="submit" value="Add Type">
                                     </form>
 
-                                    <ul class="list-group list-group-flush">
-                                        <?php foreach ($settings['types'] as $type) { ?>
-                                            <li class="list-group-item">
-                                                <?php echo $type['value']; ?>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
+                                    <div class="overflow-auto" style="height: 40vh;" >
+                                        <ul class="list-group list-group-flush">
+                                            <?php foreach ($settings['types'] as $type) { ?>
+                                                <li class="list-group-item">
+                                                    <?php echo $type['value']; ?>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <h3>
                                         File Size
                                     </h3>
                                     <hr>
-                                    <form action="" method="post">
+                                    <form action="<?php echo \app\core\Routes::getPathByName('resetSize'); ?>" method="post">
                                         <div class="form-floating my-2">
-                                            <input type="number" class="form-control" name="maxSize" id="maxSize" placeholder="" value="<?php echo $settings['maxSize']['value']; ?>">
+                                            <input type="number" class="form-control <?php echo $errors->hasError() && $errors->hasErrorName('maxSize') ? 'is-invalid' : ''; ?>" name="maxSize" id="maxSize" placeholder="" value="<?php echo $settings['maxSize']['value']; ?>">
                                             <label for="maxSize">Max size for files to upload (bytes)</label>
                                         </div>
+                                        <?php if ($errors->hasError() && $errors->hasErrorName('maxSize')) { ?>
+                                            <div class="alert alert-danger">
+                                                <?php foreach ($errors->getError('maxSize') as $error) { ?>
+                                                    <ul>
+                                                        <?php echo $error;?>
+                                                    </ul>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
                                         <div class="form-floating my-2">
-                                            <input type="number" class="form-control" name="maxUploadSize" id="maxUploadSize" placeholder="" value="<?php echo $settings['maxUploadSize']['value']; ?>">
+                                            <input type="number" class="form-control <?php echo $errors->hasError() && $errors->hasErrorName('maxUploadSize') ? 'is-invalid' : ''; ?>" name="maxUploadSize" id="maxUploadSize" placeholder="" value="<?php echo $settings['maxUploadSize']['value']; ?>">
                                             <label for="maxUploadSize">Max size that each user can upload in a day (bytes)</label>
                                         </div>
+                                        <?php if ($errors->hasError() && $errors->hasErrorName('maxUploadSize')) { ?>
+                                            <div class="alert alert-danger">
+                                                <?php foreach ($errors->getError('maxUploadSize') as $error) { ?>
+                                                    <ul>
+                                                        <?php echo $error;?>
+                                                    </ul>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
                                         <input class="btn btn-success" value="Save Changes" type="submit">
                                     </form>
                                 </div>

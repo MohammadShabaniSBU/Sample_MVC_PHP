@@ -3,6 +3,7 @@
 namespace route;
 
 use app\core\Redirect;
+use app\core\Route;
 use app\core\Routes;
 
 use app\controller\AdminController;
@@ -76,6 +77,14 @@ class RouteProvider {
 
         Routes::post('/edit/profile/{id}', [UserController::class, 'editProfile'])
             ->middleware(\app\middlewares\Auth::class);
+
+        Routes::post('/edit/settings/type', [AdminController::class, 'addType'])
+            ->middleware(\app\middlewares\Admin::class)
+            ->name('addType');
+
+        Routes::post('/edit/settings/size', [AdminController::class, 'resetSize'])
+            ->middleware(\app\middlewares\Admin::class)
+            ->name('resetSize');
 
         Routes::get('/test', function () {
             print_r(User::Do()->getAllUsers());
