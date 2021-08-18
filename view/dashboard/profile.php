@@ -31,12 +31,13 @@
                     <?php include \app\core\App::$root . '/view/dashboard/components/headbar.php';  ?>
                     <div class='my-5 mt-3 p-2 me-4'>
                         <h3>Your Info</h3>
-                        <form>
+                        <form method="post" enctype="multipart/form-data" action="/edit/profile/<?php echo \app\core\Auth::getInstance()->getId(); ?>">
                             <div class="row d-flex align-items-center">
                                 <div class="col-2">
-                                    <div class="w-100 ratio ratio-1x1 rounded bg-primary position-relative text-center">
+                                    <div class="w-100 ratio ratio-1x1 rounded position-relative text-center">
+                                        <img src="<?php echo \app\core\Auth::getInstance()->getImageUrl(); ?>" class="w-100 ratio ratio-1x1 rounded ">
                                         <div class="position-absolute top-100 start-50 translate-middle">
-                                            <input type="file" style="position: relative; opacity: 0; z-index: -1"  id="change-image">
+                                            <input type="file" style="position: relative; opacity: 0; z-index: -1"  id="change-image" name="image">
                                             <label class="bg-success px-2 rounded" for="change-image" style="cursor: pointer">
                                                 <i class="bi bi-camera fs-2 text-light"></i>
                                             </label>
@@ -47,19 +48,19 @@
                                     <div class="row row-cols-2">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control my-2" type="text" id="firstname" placeholder="">
+                                                <input name="firstname" class="form-control my-2" type="text" id="firstname" placeholder="" value="<?php echo \app\core\Auth::getInstance()->getFirstname(); ?>">
                                                 <label for="firstname">Firstname</label>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control my-2" type="text" id="lastname" placeholder="">
+                                                <input name="lastname" class="form-control my-2" type="text" id="lastname" placeholder="" value="<?php echo \app\core\Auth::getInstance()->getLastname(); ?>">
                                                 <label for="lastname">Lastname</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating">
-                                                <input class="form-control my-2 w-100" type="text" id="email" placeholder="">
+                                                <input name="email" class="form-control my-2 w-100" type="text" id="email" placeholder="" value="<?php echo \app\core\Auth::getInstance()->getEmail(); ?>">
                                                 <label for="email">Email</label>
                                             </div>
                                         </div>
