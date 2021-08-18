@@ -4,12 +4,12 @@ namespace app\core\traits;
 
 trait Formatter {
 
-    protected function format(array $targets, string $prefix = '', string $starter = '', string $finisher = '', string $separator = ', ') {
+    protected function format(array $targets, string $prefix = '', string $starter = '', string $finisher = '', string $separator = ', ', string $side = '') {
         $string = $starter;
 
         foreach ($targets as $target) {
 
-            $string .= $prefix . $target . $separator;
+            $string .= $prefix . $side . $target . $side . $separator;
         }
 
         return preg_replace("/{$separator}$/", $finisher, $string);
