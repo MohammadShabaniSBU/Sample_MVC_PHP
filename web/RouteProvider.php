@@ -86,6 +86,9 @@ class RouteProvider {
             ->middleware(\app\middlewares\Admin::class)
             ->name('resetSize');
 
+        Routes::get('/download/{id}', [UserController::class, 'download'])
+            ->middleware(\app\middlewares\Auth::class);
+
         Routes::get('/test', function () {
             print_r(User::Do()->getAllUsers());
         });

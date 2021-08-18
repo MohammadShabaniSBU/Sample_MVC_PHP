@@ -55,8 +55,6 @@ $format = new Format();
 </div>
 
 
-
-
 <div class="row m-0">
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-10 h-80-vh border rounded-3 bg-light">
@@ -92,7 +90,7 @@ $format = new Format();
                                 <td><?php echo date('Y/m/d h:s:i', $file['uploaded_time']); ?></td>
                                 <td><?php echo $format->formatSize($file['size']); ?></td>
                                 <td>
-                                    <a href="">
+                                    <a href="/download/<?php echo $file['id'] ?>">
                                         <i class="bi bi-cloud-download fs-5 text-primary"></i>
                                     </a>
                                 </td>

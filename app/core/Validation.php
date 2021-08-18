@@ -83,7 +83,7 @@ class Validation {
     }
 
     private function alphanumeric(string $param) {
-        if (preg_match("/^[a-zA-Z0-9]+$/", trim($this->data[$param])) === 0)
+        if (preg_match("/^[a-zA-Z0-9_]+$/", trim($this->data[$param])) === 0)
             Error::getInstance()->addError($param,
                 "$param must only contains alphabetic and numeric characters."
             );

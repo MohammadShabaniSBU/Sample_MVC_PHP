@@ -141,7 +141,7 @@ $files = \app\models\File::Do()->getFilesWithOwnerId(\app\core\Auth::getInstance
                               </td>
                               <td><?php echo $file['download_count']; ?></td>
                               <td>
-                                <a href="">
+                                <a href="/download/<?php echo $file['id'];?>">
                                     <i class="bi bi-cloud-download fs-5 text-success"></i>
                                 </a>
                               </td>

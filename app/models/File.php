@@ -15,7 +15,7 @@ class File extends Model {
 
     public function saveUploadedFile(array $file, array $data) {
         $type = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $path = sprintf("%s/public/storage/%d-%s.%s", App::$root, time(), $data['fileName'], $type);
+        $path = sprintf("%s/storage/%d-%s.%s", App::$root, time(), $data['fileName'], $type);
 
         if (!move_uploaded_file($file['tmp_name'], $path)) {
             // add error and redirect
@@ -23,6 +23,7 @@ class File extends Model {
 
         $this->insert([
             'title' => $data['title'],
+            'fileName' => $data['fileName'],
             'type' => $type,
             'path' => $path,
             'price' => $data['price'],

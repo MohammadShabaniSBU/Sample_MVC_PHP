@@ -6,10 +6,13 @@ use app\core\App;
 use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
+use app\core\Response;
 use app\core\Routes;
 use app\core\Validation;
 use app\models\File;
+use app\models\Settings;
 use app\models\User;
+use Cassandra\Set;
 
 class UserController extends Controller {
 
@@ -40,6 +43,11 @@ class UserController extends Controller {
 
     }
 
+    public function download(int $id) {
+        $file = File::Do()->select(['fileName', 'path', 'size', 'type'])->where('id', $id)->fetch();
+        Response::makeDownload($file['path'], $file['fileName'] . '.' . $file['type'], $file['size']);
+    }
+
     public function editFile(Request $request, $id) {
 
         Validation::make()->rules($this->editFileRules())->data($request->getParams())->validate();
@@ -53,6 +61,7 @@ class UserController extends Controller {
 
     public function deleteFile($id) {
 
+        unlink(File::Do()->select(['path'])->where('id', $id)->fetch()['path']);
         File::Do()->deleteFile($id);
         Redirect::to(Routes::getPathByName('uploads'))->go();
     }
@@ -69,7 +78,7 @@ class UserController extends Controller {
 
     public function editProfileMakeData(array $params, array $files) {
         if ($files['image']['size'] > 0) {
-            $image_url = "/storage/profiles/" . time();
+            $image_url = "/storage/" . time();
             $image_path = App::$root . '/public' .$image_url;
 
             move_uploaded_file($files['image']['tmp_name'], $image_path);
@@ -81,6 +90,11 @@ class UserController extends Controller {
     }
 
     public function uploadRules() {
+        $settings = Settings::Do()->getSettings();
+        $types = ['type'];
+        foreach ($settings['type'] as $type)
+            $type[] = $type;
+
         return [
           'title' => [
               'required',
@@ -98,8 +112,8 @@ class UserController extends Controller {
           ],
           'file' => [
               'required',
-              ['size', 10 * 1000 * 1000],
-              ['type', 'jpg', 'pdf', 'zip', 'png'],
+              ['size', $settings['maxSize']],
+              $types,
           ]
         ];
     }
