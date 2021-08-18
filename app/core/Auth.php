@@ -38,6 +38,22 @@ class Auth {
         return $this->user['firstname'] . ' ' . $this->user['lastname'];
     }
 
+    public function getFirstname() : string {
+        return $this->user['firstname'];
+    }
+
+    public function getLastname() : string {
+        return $this->user['lastname'];
+    }
+
+    public function getEmail() : string {
+        return $this->user['email'];
+    }
+
+    public function getImageUrl() : string {
+        return $this->user['image_url'];
+    }
+
     public function getType() {
         return $this->user['type'];
     }
