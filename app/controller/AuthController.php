@@ -37,7 +37,7 @@ class AuthController extends Controller {
     public function signUp(Request $request) {
         $request = $request->getParams();
 
-        Validation::make()->rules($this->signInRules())->data($request)->validate();
+        Validation::make()->rules($this->signUpRules())->data($request)->validate();
 
         if (Error::getInstance()->hasError()) {
             Redirect::to('/signUp')->data(['errors' => Error::getInstance()])->go();
@@ -56,23 +56,27 @@ class AuthController extends Controller {
         Redirect::to('/')->go();
     }
 
-    private function signInRules() {
+    private function signUpRules() {
 
         return [
             'firstname' => [
+                'required',
                 'alphabetic',
                 ['minLen', 4],
                 ['maxLen', 16],
             ],
             'lastname' => [
+                'required',
                 'alphabetic',
                 ['minLen', 4],
                 ['maxLen', 16],
             ],
             'email' => [
+                'required',
                 'email',
             ],
             'password' => [
+                'required',
                 'confirmation'
             ]
         ];
