@@ -31,11 +31,11 @@ class User extends Model {
         $this->update(['status' => $state])->where('id', $id)->execute();
     }
 
-    public function isBan($id) {
+    public function isBan($id) : bool{
         return $this->select('status')->where('id', $id)->fetch()['status'] == 0;
     }
 
-    public function changePassword(string $newPassword, int $id) {
+    public function changePassword(string $newPassword, int $id) : void {
         $this->update(['password' => md5($newPassword)])->where('id', $id)->execute();
     }
 }

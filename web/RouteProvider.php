@@ -44,7 +44,7 @@ class RouteProvider {
             ->name('uploads');
 
         Routes::get('/dashboard/requests', [AdminController::class, 'showRequests'])
-            ->middleware(\app\middlewares\Admin::class)
+            ->middleware(\app\middlewares\Confirmer::class)
             ->name('requests');
 
         Routes::get('/dashboard/users', [AdminController::class, 'showUsers'])
@@ -67,7 +67,7 @@ class RouteProvider {
             ->middleware(\app\middlewares\Admin::class);
 
         Routes::post('/changeFileStatus', [AdminController::class, 'changeFileStatus'])
-            ->middleware(\app\middlewares\Admin::class);
+            ->middleware(\app\middlewares\Confirmer::class);
 
         Routes::post('/edit/file/{id}', [UserController::class, 'editFile'])
             ->middleware(\app\middlewares\Auth::class);

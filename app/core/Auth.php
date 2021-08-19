@@ -30,6 +30,10 @@ class Auth {
         return $this->user != [];
     }
 
+    public function isConfirmer() : bool {
+        return $this->isAdmin() || $this->getType() == 'confirmer';
+    }
+
     public function isAdmin() {
         return $this->getType() == 'admin';
     }

@@ -13,7 +13,6 @@ use app\core\Validation;
 use app\models\File;
 use app\models\Settings;
 use app\models\User;
-use Cassandra\Set;
 
 class UserController extends Controller {
 
@@ -171,7 +170,7 @@ class UserController extends Controller {
             'image' => [
                 'optional',
                 ['size', 10 * 1000 * 1000],
-                ['type', 'jpg', 'png'],
+                ['type', 'jpg', 'png', 'jpeg'],
             ]
         ];
     }

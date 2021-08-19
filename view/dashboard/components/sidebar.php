@@ -5,10 +5,12 @@
 <!--    <a href="--><?php //echo \app\core\Routes::getPathByName('downloads'); ?><!--" class="btn btn--><?php //echo $page == 'download' ? '' : '-outline'; ?><!---success border-0 border-bottom w-100 text-start rounded-0 fs-5">-->
 <!--        Downloaded Files-->
 <!--    </a>-->
-    <?php if (\app\core\Auth::getInstance()->isAdmin()) { ?>
+    <?php if (\app\core\Auth::getInstance()->isConfirmer()) { ?>
     <a href="<?php echo \app\core\Routes::getPathByName('requests'); ?>" class="btn btn<?php echo $page == 'request' ? '' : '-outline'; ?>-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Requested Files
     </a>
+    <?php } ?>
+    <?php if (\app\core\Auth::getInstance()->isAdmin()) { ?>
     <a href="<?php echo \app\core\Routes::getPathByName('user management'); ?>" class="btn btn<?php echo $page == 'users' ? '' : '-outline'; ?>-success border-0 border-bottom w-100 text-start rounded-0 fs-5">
         Users Management
     </a>
