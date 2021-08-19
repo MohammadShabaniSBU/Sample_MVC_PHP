@@ -86,4 +86,9 @@ class AdminController extends Controller {
 
         Redirect::to(Routes::getPathByName('settings'))->data(['errors' => Error::getInstance()])->go();
     }
+
+    public function changeAccessLevel(Request $request, int $id) : void {
+        User::Do()->changeType(strtolower($request->getParams()['action']), $id);
+        Redirect::to(Routes::getPathByName('user management'))->go();
+    }
 }

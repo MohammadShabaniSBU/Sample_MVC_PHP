@@ -95,6 +95,8 @@ class RouteProvider {
         Routes::post('/edit/password/{id}', [UserController::class, 'changePassword'])
             ->middleware(\app\middlewares\Auth::class);
 
+        Routes::post('/change/user/accessLevel/{id}', [AdminController::class, 'changeAccessLevel'])
+            ->middleware(\app\middlewares\Admin::class);
     }
 }
 

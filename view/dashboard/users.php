@@ -1,32 +1,3 @@
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModal">Edit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" class="form-floating">
-                    <div class="form-floating my-2">
-                        <input type="text" class="form-control" name='title' id='title' placeholder=''>
-                        <label for="title">Title</label>
-                    </div>
-                    <div class="form-floating my-2">
-                        <input type="text" class="form-control" name='price' id='price' placeholder=''>
-                        <label for="price">Price</label>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -74,6 +45,30 @@
     </div>
 </div>
 
+    <div class="modal fade" id="userAccessModal<?php echo $user['id'];?>" tabindex="-1" aria-labelledby="userAccessModal<?php echo $user['id'];?>" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userAccessModal<?php echo $user['id'];?>"><?php echo $user['firstname'] . ' ' . $user['lastname'];?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        Do you want to change the access level of <?php echo $user['firstname'] . ' ' . $user['lastname']; ?>?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="/change/user/accessLevel/<?php echo $user['id']; ?>" method="post">
+                        <input type="submit" class="btn btn-danger" <?php if ($user['type'] == 'admin') echo 'disabled'; ?> value="Admin" name="action">
+                        <input type="submit" class="btn btn-warning" <?php if ($user['type'] == 'confirmer') echo 'disabled'; ?> value="Confirmer" name="action">
+                        <input type="submit" class="btn btn-primary" <?php if ($user['type'] == 'normal') echo 'disabled'; ?> value="Normal" name="action">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 <?php } ?>
 
@@ -85,6 +80,8 @@
                 return 'danger';
             case 'normal':
                 return 'primary';
+            case 'confirmer':
+                return 'warning';
 
         }
     }
@@ -118,9 +115,9 @@
                                 <td><?php echo $user['lastname']; ?></td>
                                 <td><?php echo $user['email']; ?></td>
                                 <td>
-                                    <div class="bg-<?php echo getColorType($user['type'])?> rounded text-light">
+                                    <a href="#" class="btn btn-<?php echo getColorType($user['type'])?> rounded text-light py-1" data-bs-toggle="modal" data-bs-target="#userAccessModal<?php echo $user['id'];?>">
                                         <?php echo $user['type']; ?>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td>
                                     <button class="btn btn-<?php echo $user['status'] ? 'success' : 'danger'; ?> py-0" data-bs-toggle="modal" data-bs-target="#activationModal<?php echo $user['id'];?>">

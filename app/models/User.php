@@ -38,4 +38,8 @@ class User extends Model {
     public function changePassword(string $newPassword, int $id) : void {
         $this->update(['password' => md5($newPassword)])->where('id', $id)->execute();
     }
+
+    public function changeType(string $newType, int $id) {
+        $this->update(['type' => $newType])->where('id', $id)->execute();
+    }
 }
