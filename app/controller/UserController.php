@@ -84,6 +84,15 @@ class UserController extends Controller {
             Redirect::to(Routes::getPathByName('profile'))->data(['errors' => Error::getInstance()])->go();
     }
 
+    public function changePassword(Request $request, int $id) {
+        Validation::make()->rules(['password' => ['required', 'confirmation']])->data($request->getParams())->validate();
+
+        if (!Error::getInstance()->hasError())
+            User::Do()->changePassword($request->getParams()['password'], $id);
+
+        Redirect::to(Routes::getPathByName('profile'))->data(['errors' => Error::getInstance()])->go();
+    }
+
     public function editProfileMakeData(array $params, array $files) {
         if ($files['image']['size'] > 0) {
             $image_url = "/storage/" . time();

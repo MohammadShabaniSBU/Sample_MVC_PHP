@@ -92,9 +92,9 @@ class RouteProvider {
         Routes::get('/download/counter/{id}', [UserController::class, 'downloadCounter'])
             ->middleware(\app\middlewares\Auth::class);
 
-        Routes::get('/test', function () {
-            print_r(User::Do()->getAllUsers());
-        });
+        Routes::post('/edit/password/{id}', [UserController::class, 'changePassword'])
+            ->middleware(\app\middlewares\Auth::class);
+
     }
 }
 

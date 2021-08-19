@@ -11,12 +11,20 @@
                     <?php } ?>
                     <?php if (isset($errorMessage)) { ?>
                         <div class="alert alert-danger">
-                            <?php echo $errorMessage; ?>
+                            <ul>
+                                <li>
+                                    <?php echo $errorMessage; ?>
+                                </li>
+                            </ul>
                         </div>
                     <?php } ?>
                     <?php if (isset($warningMessage)) { ?>
                         <div class="alert alert-warning">
-                            <?php echo $warningMessage; ?>
+                           <ul>
+                               <li>
+                                   <?php echo $warningMessage; ?>
+                               </li>
+                           </ul>
                         </div>
                     <?php } ?>
                     <form action="/signIn" method="post">

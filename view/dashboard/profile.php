@@ -21,7 +21,6 @@
 
 
 
-
 <div class="row m-0">
     <div class="d-flex justify-content-center align-items-center h-100-vh">
         <div class="col-10 h-80-vh border rounded-3 bg-light">
@@ -30,6 +29,19 @@
                 <div class="col-10">
                     <?php include \app\core\App::$root . '/view/dashboard/components/headbar.php';  ?>
                     <div class='my-5 mt-3 p-2 me-4'>
+                        <?php if ($errors->hasError()) { ?>
+                            <div class="alert alert-danger py-0">
+                                <ul class="my-0">
+                                    <?php foreach ($errors->getErrors() as $error) {
+                                        foreach ($error as $message) { ?>
+                                            <li class="my-1">
+                                                <?php echo $message ?>
+                                            </li>
+                                        <?php }
+                                    } ?>
+                                </ul>
+                            </div>
+                        <?php } ?>
                         <h3>Your Info</h3>
                         <form method="post" enctype="multipart/form-data" action="/edit/profile/<?php echo \app\core\Auth::getInstance()->getId(); ?>">
                             <div class="row d-flex align-items-center">
@@ -75,27 +87,29 @@
                         </form>
                         <hr>
                         <h3 class="mt-4">Your Password</h3>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="">
-                                    <label for="password">Password</label>
+                        <form action="/edit/password/<?php echo \app\core\Auth::getInstance()->getId(); ?>" method="post">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="">
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password-confirmation" name="password-confirmation" placeholder="">
+                                        <label for="password-confirmation">Password Confirmation</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="password-confirmation" name="password-confirmation" placeholder="">
-                                    <label for="password-confirmation">Password Confirmation</label>
+                            <div class="row d-flex justify-content-end">
+                                <div class="col-2">
+                                    <div class="form-floating">
+                                        <input type="submit" class="btn btn-success my-2" value="Change Password">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-2">
-                                <div class="form-floating">
-                                    <input type="submit" class="btn btn-success my-2" value="Change Password">
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

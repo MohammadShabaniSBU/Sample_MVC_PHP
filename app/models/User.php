@@ -35,4 +35,7 @@ class User extends Model {
         return $this->select('status')->where('id', $id)->fetch()['status'] == 0;
     }
 
+    public function changePassword(string $newPassword, int $id) {
+        $this->update(['password' => md5($newPassword)])->where('id', $id)->execute();
+    }
 }
