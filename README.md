@@ -5,7 +5,7 @@
 + composer
 + mysql
 ### How to run
-+ At first you need to edit the `.env` file with your database information. (see the deafault file)
++ At first you need to edit the `.env` file with your database information. (see the default file)
 + Then you should import tables to the database. You can do it with importing `data.sql` file to your database (It will contain some test data).
 + Then you must run `composer dump-autoload` in the root directory.
 + Then run a php server in `public` directory. ` php -S 127.0.0.1:9090 -t public`
