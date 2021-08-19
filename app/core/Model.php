@@ -7,9 +7,6 @@ use app\core\traits\Formatter;
 abstract class Model {
     use Formatter;
 
-    private string $dsn = 'mysql:host=127.0.0.1;dbname=homework_6;';
-    private string $username = 'root';
-    private string $password = '13801019';
     private \PDO $db;
 
     private string $tableName;
@@ -20,7 +17,7 @@ abstract class Model {
 
     protected function __construct(string $tableName) {
         $this->tableName = $tableName;
-        $this->db = new \PDO($this->dsn, $this->username, $this->password);
+        $this->db = Database::getInstance()->getDB();
     }
 
     public abstract static function Do();
