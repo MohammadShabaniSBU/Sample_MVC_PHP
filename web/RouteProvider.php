@@ -89,6 +89,9 @@ class RouteProvider {
         Routes::get('/download/{id}', [UserController::class, 'download'])
             ->middleware(\app\middlewares\Auth::class);
 
+        Routes::get('/download/counter/{id}', [UserController::class, 'downloadCounter'])
+            ->middleware(\app\middlewares\Auth::class);
+
         Routes::get('/test', function () {
             print_r(User::Do()->getAllUsers());
         });

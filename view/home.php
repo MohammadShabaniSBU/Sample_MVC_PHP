@@ -1,3 +1,34 @@
+<?php
+class Format {
+    use \app\core\traits\Formatter;
+}
+
+$formatter = new Format();
+$files = \app\models\File::Do()->getAllFiles();
+?>
+
+<?php foreach ($files as $file) { ?>
+<div class="modal fade" id="fileModal<?php echo $file['id']; ?>" tabindex="-1" aria-labelledby="fileModal<?php echo $file['id']; ?>" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileModal<?php echo $file['id']; ?>"><?php echo $file['title']; ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    Do you want to download <?php echo $file['title']; ?> file?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="/download/counter/<?php echo $file['id']; ?>" class="btn btn-success">Download</a>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
 <!-- Upload Modal -->
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -110,25 +141,27 @@
             <?php } ?>
             <div class='px-5 py-3'>
                 <div class="row row-cols-3">
-
+                    <?php foreach ($files as $file) { ?>
+                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#fileModal<?php echo $file['id']; ?>">
                     <div class="col my-2">
                         <div class="border border-success rounded-3 p-2">
                             <div class="row">
                                 <div class="col-4">
-                                    <div class="w-100 ratio ratio-1x1 rounded-3 bg-dark" ></div>
+                                    <img src="<?php echo $file['image_url']; ?>" class="rounded-3 bg-dark h-100 w-100" style="object-fit: contain;">
                                 </div>
                                 <div class="col-8">
-                                    <div>title</div>
-                                    <div>owner</div>
+                                    <div><?php echo $file['title']; ?></div>
+                                    <div><?php echo $file['firstname'] . ' ' . $file['lastname']; ?></div>
                                     <div class="row">
-                                        <div class='col'>size</div>
-                                        <div class='col'>type</div>
+                                        <div class='col'><?php echo $formatter->formatSize($file['size']); ?></div>
+                                        <div class='col'><?php echo $file['type']; ?></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    </a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

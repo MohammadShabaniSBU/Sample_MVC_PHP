@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\core\Auth;
 use app\core\Error;
 use app\core\Redirect;
 use app\core\Request;
@@ -46,6 +47,13 @@ class UserController extends Controller {
     public function download(int $id) {
         $file = File::Do()->select(['fileName', 'path', 'size', 'type'])->where('id', $id)->fetch();
         Response::makeDownload($file['path'], $file['fileName'] . '.' . $file['type'], $file['size']);
+    }
+
+    public function downloadCounter(int $id) {
+        if (!File::Do()->checkFileWithOwner($id, Auth::getInstance()->getId()))
+            File::Do()->increaseDownloadCount($id);
+
+        $this->download($id);
     }
 
     public function editFile(Request $request, $id) {
@@ -92,8 +100,8 @@ class UserController extends Controller {
     public function uploadRules() {
         $settings = Settings::Do()->getSettings();
         $types = ['type'];
-        foreach ($settings['type'] as $type)
-            $type[] = $type;
+        foreach ($settings['types'] as $type)
+            $types[] = $type['value'];
 
         return [
           'title' => [
@@ -112,7 +120,7 @@ class UserController extends Controller {
           ],
           'file' => [
               'required',
-              ['size', $settings['maxSize']],
+              ['size', $settings['maxSize']['value']],
               $types,
           ]
         ];

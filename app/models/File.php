@@ -33,6 +33,13 @@ class File extends Model {
         ])->execute();
     }
 
+    public function getAllFiles() {
+        return $this->select(['files.id', 'files.title', 'files.size', 'files.type', 'users.firstname', 'users.lastname', 'users.image_url'])
+            ->join('users', 'users.id', '=', 'files.owner_id')
+            ->where('files.status', 1)
+            ->fetchAll();
+    }
+
     public function getNonConfirmedFiles() {
         return $this->select(['users.firstname', 'users.lastname', 'files.id', 'files.title', 'files.size', 'files.price', 'files.type', 'files.uploaded_time'])
             ->join('users','users.id', '=', 'files.owner_id')
@@ -46,6 +53,16 @@ class File extends Model {
             ->fetchAll();
     }
 
+    public function increaseDownloadCount(int $id) {
+        $newCount = $this->select('download_count')
+                ->where('id', $id)
+                ->fetch()['download_count'] + 1;
+
+        $this->update(['download_count' => $newCount])
+            ->where('id', $id)
+            ->execute();
+    }
+
     public function setFileStatus(int $id, int $status) : void {
         $this->update(['status' => $status])->where('id', $id)->execute();
     }
@@ -56,5 +73,9 @@ class File extends Model {
 
     public function deleteFile(int $id) {
         $this->delete()->where('id', $id)->execute();
+    }
+
+    public function checkFileWithOwner(int $fileId, int $ownerId) {
+        return $this->select()->where('id', $fileId)->where('owner_id', $ownerId)->fetch() != [];
     }
 }
